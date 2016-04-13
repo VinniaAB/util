@@ -1,0 +1,1 @@
+<?php echo $this->nest(__DIR__ . '/template.php', $data); ?>
