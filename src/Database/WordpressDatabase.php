@@ -34,7 +34,7 @@ class WordpressDatabase implements DatabaseInterface
      * @param string $sql
      * @return string mixed
      */
-    private function pdoStringToWpdbString($sql)
+    private function pdoStringToWpdbString(string $sql)
     {
         return preg_replace('/:\w+/', '%s', $sql);
     }
@@ -44,7 +44,7 @@ class WordpressDatabase implements DatabaseInterface
      * @param string[] $params
      * @return string
      */
-    private function prepare($sql, array $params = [])
+    private function prepare(string $sql, array $params = [])
     {
         $sql = $this->pdoStringToWpdbString($sql);
 
@@ -65,7 +65,7 @@ class WordpressDatabase implements DatabaseInterface
      * @param string[] $params
      * @return mixed
      */
-    public function execute($sql, array $params = [])
+    public function execute(string $sql, array $params = [])
     {
         $sql = $this->prepare($sql, $params);
         return $this->db->query($sql);
@@ -77,7 +77,7 @@ class WordpressDatabase implements DatabaseInterface
      * @param string[] $params
      * @return string[][]
      */
-    public function queryAll($sql, array $params = [])
+    public function queryAll(string $sql, array $params = [])
     {
         $sql = $this->prepare($sql, $params);
         return $this->db->get_results($sql, ARRAY_A);
@@ -89,7 +89,7 @@ class WordpressDatabase implements DatabaseInterface
      * @param string[] $params
      * @return string[]
      */
-    public function query($sql, array $params = [])
+    public function query(string $sql, array $params = [])
     {
         $sql = $this->prepare($sql, $params);
         return $this->db->get_row($sql, ARRAY_A);

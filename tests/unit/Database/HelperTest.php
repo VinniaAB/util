@@ -7,10 +7,9 @@
  */
 namespace Vinnia\Util\Tests\Database;
 
-use PDO;
 use Vinnia\Util\Database\PDODatabase;
 use Vinnia\Util\Database\Helper;
-
+use Vinnia\Util\Database\SqliteQuoter;
 use Vinnia\Util\Tests\Test;
 
 class HelperTest extends Test
@@ -28,19 +27,11 @@ class HelperTest extends Test
     public function setUp()
     {
         parent::setUp();
-        $host = '127.0.0.1';
-        $dbname = 'dbtools_test';
-        $user = 'root';
-        $pass = '';
-        $dsn = sprintf('mysql:host=%s;dbname=%s', $host, $dbname);
-        $this->db = PDODatabase::build($dsn, $user, $pass);
-        $this->helper = new Helper($this->db);
-    }
-
-    public function tearDown()
-    {
-        $this->db->execute('delete from car');
-        parent::tearDown();
+        $dsn = 'sqlite::memory:';
+        $this->db = PDODatabase::build($dsn, '', '');
+        $schema = file_get_contents(__DIR__ . '/../../_data/sqlite.sql');
+        $this->db->execute($schema);
+        $this->helper = new Helper($this->db, new SqliteQuoter());
     }
 
     public function testInsert()

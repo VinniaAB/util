@@ -18,20 +18,18 @@ class Helper
     private $db;
 
     /**
-     * @param DatabaseInterface $db
+     * @var QuoterInterface
      */
-    function __construct(DatabaseInterface $db)
-    {
-        $this->db = $db;
-    }
+    private $quoter;
 
     /**
-     * @param $col
-     * @return string
+     * @param DatabaseInterface $db
+     * @param QuoterInterface $quoter
      */
-    protected function quoteColumn($col)
+    function __construct(DatabaseInterface $db, QuoterInterface $quoter)
     {
-        return "`{$col}`";
+        $this->db = $db;
+        $this->quoter = $quoter;
     }
 
     /**
@@ -41,17 +39,17 @@ class Helper
      */
     protected function buildPredicate(array $predicate, array &$paramValues)
     {
+        if (count($predicate) === 0) {
+            return '';
+        }
+
         $wheres = [];
         $i = 0;
         foreach ($predicate as $key => $value) {
             $paramName = ':qq' . $i;
-            $wheres[] = $this->quoteColumn($key) . ' = ' . $paramName;
+            $wheres[] = $this->quoter->quoteColumn($key) . ' = ' . $paramName;
             $paramValues[$paramName] = $value;
             $i++;
-        }
-
-        if (count($wheres) === 0) {
-            return '';
         }
 
         return 'where ' . implode(' AND ', $wheres);
@@ -66,10 +64,10 @@ class Helper
      * @param string[] $values
      * @return mixed
      */
-    public function insert($table, array $values)
+    public function insert(string $table, array $values)
     {
         $cols = array_keys($values);
-        $cols = array_map([$this, 'quoteColumn'], $cols);
+        $cols = array_map(function($col) { return $this->quoter->quoteColumn($col); }, $cols);
         $colString = implode(',', $cols);
 
         $params = [];
@@ -82,7 +80,7 @@ class Helper
             $i++;
         }
 
-        $table = $this->quoteColumn($table);
+        $table = $this->quoter->quoteTable($table);
         $paramString = implode(',', $params);
         $sql = "insert into {$table}($colString) values ($paramString)";
 
@@ -99,20 +97,20 @@ class Helper
      * @param string[] $predicate columns used to build the where-part of the query
      * @return mixed
      */
-    public function update($table, array $values, array $predicate = [])
+    public function update(string $table, array $values, array $predicate = [])
     {
         $updateParts = [];
         $paramValues = [];
         $i = 0;
         foreach ($values as $key => $value) {
-            $col = $this->quoteColumn($key);
+            $col = $this->quoter->quoteColumn($key);
             $paramName = ':qp' . $i;
             $updateParts[] = $col . ' = ' . $paramName;
             $paramValues[$paramName] = $value;
             $i++;
         }
 
-        $table = $this->quoteColumn($table);
+        $table = $this->quoter->quoteTable($table);
         $valueString = implode(',', $updateParts);
         $sql = "update {$table} set {$valueString} " . $this->buildPredicate($predicate, $paramValues);
 
@@ -126,16 +124,16 @@ class Helper
      * @param string[] $paramValues
      * @return string
      */
-    protected function buildSelectQuery($table, array $columns, array $predicate, array &$paramValues)
+    protected function buildSelectQuery(string $table, array $columns, array $predicate, array &$paramValues)
     {
         $cols = array_map(function ($col) {
             if ($col !== '*') {
-                return $this->quoteColumn($col);
+                return $this->quoter->quoteColumn($col);
             }
             return $col;
         }, $columns);
 
-        $table = $this->quoteColumn($table);
+        $table = $this->quoter->quoteTable($table);
         $colString = implode(',', $cols);
         return "select {$colString} from {$table} " . $this->buildPredicate($predicate, $paramValues);
     }
@@ -150,7 +148,7 @@ class Helper
      * @param string[] $predicate
      * @return string[]
      */
-    public function selectOne($table, array $columns = ['*'], array $predicate = [])
+    public function selectOne(string $table, array $columns = ['*'], array $predicate = [])
     {
         $paramValues = [];
         $sql = $this->buildSelectQuery($table, $columns, $predicate, $paramValues) . ' limit 1';
@@ -167,7 +165,7 @@ class Helper
      * @param string[] $predicate
      * @return string[][]
      */
-    public function select($table, array $columns = ['*'], array $predicate = [])
+    public function select(string $table, array $columns = ['*'], array $predicate = [])
     {
         $paramValues = [];
         $sql = $this->buildSelectQuery($table, $columns, $predicate, $paramValues);
@@ -183,10 +181,10 @@ class Helper
      * @param string[] $predicate
      * @return bool
      */
-    public function exists($table, array $predicate)
+    public function exists(string $table, array $predicate)
     {
         $paramValues = [];
-        $table = $this->quoteColumn($table);
+        $table = $this->quoter->quoteTable($table);
         $sql = "select 1 from {$table} " . $this->buildPredicate($predicate, $paramValues) . ' limit 1';
         return !!$this->db->query($sql, $paramValues);
     }
@@ -197,7 +195,7 @@ class Helper
      * @param string[] $predicate values to determine if the row exists
      * @return mixed
      */
-    public function insertOrUpdate($table, array $values, array $predicate = [])
+    public function insertOrUpdate(string $table, array $values, array $predicate = [])
     {
         if ($this->exists($table, $predicate)) {
             return $this->update($table, $values, $predicate);

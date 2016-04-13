@@ -32,7 +32,7 @@ class PDODatabase implements DatabaseInterface
      * @param string $password
      * @return static
      */
-    public static function build($dsn, $username, $password)
+    public static function build(string $dsn, string $username, string $password)
     {
         $pdo = new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -49,7 +49,7 @@ class PDODatabase implements DatabaseInterface
      * @param string[] $params
      * @return mixed
      */
-    public function execute($sql, array $params = [])
+    public function execute(string $sql, array $params = [])
     {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($params);
@@ -61,7 +61,7 @@ class PDODatabase implements DatabaseInterface
      * @param string[] $params
      * @return string[][]
      */
-    public function queryAll($sql, array $params = [])
+    public function queryAll(string $sql, array $params = [])
     {
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
@@ -74,7 +74,7 @@ class PDODatabase implements DatabaseInterface
      * @param string[] $params
      * @return string[]
      */
-    public function query($sql, array $params = [])
+    public function query(string $sql, array $params = [])
     {
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
