@@ -15,7 +15,9 @@ use Vinnia\Util\Database\Helper;
 use Vinnia\Util\Database\MysqlQuoter;
 
 $dsn = 'mysql:host=127.0.0.1;dbname=my_db';
-$db = new PDODatabase::build($dsn, 'user', 'pass');
+$user = 'user';
+$password = 'pass';
+$db = PDODatabase::build($dsn, $user, $password);
 
 // execute the query and fetch all rows
 $cars = $db->queryAll('select * from cars');
