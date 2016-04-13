@@ -33,13 +33,13 @@ class Template
 
     /**
      * Helper function to enable template nesting
-     * @param  string $template path
+     * @param  string $file path
      * @param  array $data data to inject
      * @return string rendered template
      */
-    public function nest($template, array $data = [])
+    public function nest(string $file, array $data = [])
     {
-        return (new self($template))->render($data);
+        return (new self($file))->render($data);
     }
 
 }
