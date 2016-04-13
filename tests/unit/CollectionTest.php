@@ -54,5 +54,11 @@ class CollectionTest extends AbstractTest
         $result = $this->collection->every(function($i) { return $i >= 0; });
         $this->assertEquals(true, $result);
     }
+
+    public function testReduce()
+    {
+        $result = $this->collection->reduce(function($carry, $current) { return $carry + $current; }, 0);
+        $this->assertEquals(10, $result);
+    }
     
 }

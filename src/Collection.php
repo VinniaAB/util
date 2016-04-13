@@ -76,6 +76,16 @@ class Collection
     }
 
     /**
+     * @param Closure $func
+     * @param mixed $initialValue
+     * @return mixed
+     */
+    public function reduce(Closure $func, $initialValue)
+    {
+        return array_reduce($this->items, $func, $initialValue);
+    }
+
+    /**
      * @return array
      */
     public function value()
