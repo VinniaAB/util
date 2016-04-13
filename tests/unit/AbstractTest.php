@@ -8,8 +8,9 @@
 
 namespace Vinnia\Util\Tests;
 
+use Codeception\TestCase\Test;
 
-class Test extends \Codeception\TestCase\Test
+abstract class AbstractTest extends Test
 {
 
 }

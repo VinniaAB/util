@@ -10,9 +10,9 @@ namespace Vinnia\Util\Tests\Database;
 use Vinnia\Util\Database\PDODatabase;
 use Vinnia\Util\Database\Helper;
 use Vinnia\Util\Database\SqliteQuoter;
-use Vinnia\Util\Tests\Test;
+use Vinnia\Util\Tests\AbstractTest;
 
-class HelperTest extends Test
+class HelperTest extends AbstractTest
 {
     /**
      * @var PDODatabase
