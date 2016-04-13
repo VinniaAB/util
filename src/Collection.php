@@ -31,7 +31,7 @@ class Collection
      * @param Closure $func
      * @return Collection
      */
-    public function map(Closure $func)
+    public function map(Closure $func): Collection
     {
         return new Collection(array_map($func, $this->items));
     }
@@ -40,7 +40,7 @@ class Collection
      * @param Closure $func
      * @return Collection
      */
-    public function filter(Closure $func)
+    public function filter(Closure $func): Collection
     {
         $filtered = array_filter($this->items, $func);
         $values = array_values($filtered);
@@ -51,7 +51,7 @@ class Collection
      * @param Closure $func
      * @return bool
      */
-    public function some(Closure $func)
+    public function some(Closure $func): bool
     {
         foreach ($this->items as $item) {
             if ($func($item) === true) {
@@ -65,7 +65,7 @@ class Collection
      * @param Closure $func
      * @return bool
      */
-    public function every(Closure $func)
+    public function every(Closure $func): bool
     {
         foreach ($this->items as $item) {
             if ($func($item) !== true) {
@@ -88,7 +88,7 @@ class Collection
     /**
      * @return array
      */
-    public function value()
+    public function value(): array
     {
         return $this->items;
     }

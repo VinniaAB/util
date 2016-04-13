@@ -37,7 +37,7 @@ class Helper
      * @param string[] $paramValues inject parameter values into this array
      * @return string
      */
-    protected function buildPredicate(array $predicate, array &$paramValues)
+    protected function buildPredicate(array $predicate, array &$paramValues): string
     {
         if (count($predicate) === 0) {
             return '';
@@ -64,7 +64,7 @@ class Helper
      * @param string[] $values
      * @return mixed
      */
-    public function insert(string $table, array $values)
+    public function insert(string $table, array $values): bool
     {
         $cols = array_keys($values);
         $cols = array_map(function($col) { return $this->quoter->quoteColumn($col); }, $cols);
@@ -97,7 +97,7 @@ class Helper
      * @param string[] $predicate columns used to build the where-part of the query
      * @return mixed
      */
-    public function update(string $table, array $values, array $predicate = [])
+    public function update(string $table, array $values, array $predicate = []): bool
     {
         $updateParts = [];
         $paramValues = [];
@@ -124,7 +124,7 @@ class Helper
      * @param string[] $paramValues
      * @return string
      */
-    protected function buildSelectQuery(string $table, array $columns, array $predicate, array &$paramValues)
+    protected function buildSelectQuery(string $table, array $columns, array $predicate, array &$paramValues): string
     {
         $cols = array_map(function ($col) {
             if ($col !== '*') {
@@ -148,7 +148,7 @@ class Helper
      * @param string[] $predicate
      * @return string[]
      */
-    public function selectOne(string $table, array $columns = ['*'], array $predicate = [])
+    public function selectOne(string $table, array $columns = ['*'], array $predicate = []): array
     {
         $paramValues = [];
         $sql = $this->buildSelectQuery($table, $columns, $predicate, $paramValues) . ' limit 1';
@@ -165,7 +165,7 @@ class Helper
      * @param string[] $predicate
      * @return string[][]
      */
-    public function select(string $table, array $columns = ['*'], array $predicate = [])
+    public function select(string $table, array $columns = ['*'], array $predicate = []): array
     {
         $paramValues = [];
         $sql = $this->buildSelectQuery($table, $columns, $predicate, $paramValues);
@@ -181,7 +181,7 @@ class Helper
      * @param string[] $predicate
      * @return bool
      */
-    public function exists(string $table, array $predicate)
+    public function exists(string $table, array $predicate): bool
     {
         $paramValues = [];
         $table = $this->quoter->quoteTable($table);
@@ -195,7 +195,7 @@ class Helper
      * @param string[] $predicate values to determine if the row exists
      * @return mixed
      */
-    public function insertOrUpdate(string $table, array $values, array $predicate = [])
+    public function insertOrUpdate(string $table, array $values, array $predicate = []): bool
     {
         if ($this->exists($table, $predicate)) {
             return $this->update($table, $values, $predicate);

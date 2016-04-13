@@ -23,7 +23,7 @@ class Template
      * @param  array $data data to inject into the template
      * @return string rendered template
      */
-    public function render(array $data = [])
+    public function render(array $data = []): string
     {
         ob_start();
         extract($data, EXTR_SKIP);
@@ -37,7 +37,7 @@ class Template
      * @param  array $data data to inject
      * @return string rendered template
      */
-    public function nest(string $file, array $data = [])
+    public function nest(string $file, array $data = []): string
     {
         return (new self($file))->render($data);
     }

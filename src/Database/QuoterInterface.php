@@ -15,12 +15,12 @@ interface QuoterInterface
      * @param string $name
      * @return mixed
      */
-    public function quoteTable(string $name);
+    public function quoteTable(string $name): string;
 
     /**
      * @param string $name
      * @return string
      */
-    public function quoteColumn(string $name);
+    public function quoteColumn(string $name): string;
 
 }

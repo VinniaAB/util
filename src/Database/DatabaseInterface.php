@@ -17,7 +17,7 @@ interface DatabaseInterface
      * @param string[] $params
      * @return mixed
      */
-    public function execute(string $sql, array $params = []);
+    public function execute(string $sql, array $params = []): bool;
 
     /**
      * Fetch all rows from the specified query
@@ -25,7 +25,7 @@ interface DatabaseInterface
      * @param string[] $params
      * @return string[][]
      */
-    public function queryAll(string $sql, array $params = []);
+    public function queryAll(string $sql, array $params = []): array;
 
     /**
      * Fetch a single database row
