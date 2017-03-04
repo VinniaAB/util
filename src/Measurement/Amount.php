@@ -50,10 +50,22 @@ class Amount
         return $this->unit;
     }
 
+    /**
+     * @param string $unit
+     * @return Amount
+     */
     public function convertTo(string $unit): self
     {
         $converter = new UnitConverter($this->unit, $unit);
         return new Amount($converter->convert($this->value), $unit);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->value;
     }
 
 }
