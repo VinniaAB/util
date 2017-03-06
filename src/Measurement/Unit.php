@@ -29,4 +29,11 @@ class Unit
     const POUND = 'lb';
     const STONE = 'st';
     const OUNCE = 'oz';
+
+    const SQUARE_METER = 'sqm';
+    const SQUARE_FOOT = 'sqft';
+
+    const METERS_PER_SECOND = 'mps';
+    const KILOMETERS_PER_HOUR = 'kph';
+    const MILES_PER_HOUR = 'mph';
 }

@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Tests;
 
+use Vinnia\Util\Measurement\Unit;
 use Vinnia\Util\Measurement\UnitConverter;
 use Vinnia\Util\Tests\AbstractTest;
 
@@ -31,6 +32,9 @@ class UnitConverterTest extends AbstractTest
             ['kg', 'st', 1.0, 0.157473],
             ['g', 'oz', 1000.0, 35.27396],
             ['t', 'kg', 1.0, 1000.0],
+            [Unit::SQUARE_FOOT, Unit::SQUARE_METER, 400.0, 37.161216],
+            [Unit::METERS_PER_SECOND, Unit::KILOMETERS_PER_HOUR, 2.0, 7.2],
+            [Unit::MILES_PER_HOUR, Unit::KILOMETERS_PER_HOUR, 60.0, 96.56],
         ];
     }
 
