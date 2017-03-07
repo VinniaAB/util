@@ -5,6 +5,7 @@
  * Date: 2016-04-13
  * Time: 22:06
  */
+declare(strict_types = 1);
 
 namespace Vinnia\Util;
 
@@ -83,6 +84,63 @@ class Collection
     public function reduce(Closure $func, $initialValue)
     {
         return array_reduce($this->items, $func, $initialValue);
+    }
+
+    /**
+     * @param string $separator
+     * @return string
+     */
+    public function join(string $separator): string
+    {
+        return implode($separator, $this->items);
+    }
+
+    /**
+     * Does not preserve keys.
+     * @return Collection
+     */
+    public function flatten(): Collection
+    {
+        $result = [];
+        array_walk_recursive($this->items, function ($value) use (&$result) {
+            $result[] = $value;
+        });
+        return new Collection($result);
+    }
+
+    /**
+     * @param Closure $func
+     * @return Collection
+     */
+    public function flatMap(Closure $func): Collection
+    {
+        return $this->flatten()->map($func);
+    }
+
+    /**
+     * @param int $offset
+     * @param int|null $length
+     * @return Collection
+     */
+    public function slice(int $offset, ?int $length = null): Collection
+    {
+        return new Collection(array_slice($this->items, $offset, $length));
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function head()
+    {
+        return $this->items[0] ?? null;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function tail(): Collection
+    {
+        return $this->slice(1);
     }
 
     /**

@@ -60,5 +60,39 @@ class CollectionTest extends AbstractTest
         $result = $this->collection->reduce(function($carry, $current) { return $carry + $current; }, 0);
         $this->assertEquals(10, $result);
     }
+
+    public function testJoin()
+    {
+        $result = $this->collection->join('-');
+        $this->assertEquals('0-1-2-3-4', $result);
+    }
+
+    public function testFlatten()
+    {
+        $c = new Collection([[1, 2], [4, 5], [6, 5]]);
+        $this->assertEquals([1, 2, 4, 5, 6, 5], $c->flatten()->value());
+    }
+
+    public function testFlatMap()
+    {
+        $c = new Collection([[0, 1], [2, 3]]);
+        $result = $c->flatMap(function ($value) { return $value * 2; })->value();
+        $this->assertEquals([0, 2, 4, 6], $result);
+    }
+
+    public function testSlice()
+    {
+        $this->assertEquals([0, 1], $this->collection->slice(0, 2)->value());
+    }
+
+    public function testHead()
+    {
+        $this->assertEquals(0, $this->collection->head());
+    }
+
+    public function testTail()
+    {
+        $this->assertEquals([1, 2, 3, 4], $this->collection->tail()->value());
+    }
     
 }
