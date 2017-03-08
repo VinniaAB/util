@@ -94,5 +94,22 @@ class CollectionTest extends AbstractTest
     {
         $this->assertEquals([1, 2, 3, 4], $this->collection->tail()->value());
     }
+
+    public function testSort()
+    {
+        $a = new Collection([3, 2, 1]);
+
+        $b = $a->sort(function (int $a, int $b) {
+            return $a <=> $b;
+        });
+
+        $this->assertEquals([1, 2, 3], $b->value());
+
+        $c = $a->sort(function (int $a, int $b) {
+            return $b <=> $a;
+        });
+
+        $this->assertEquals([3, 2, 1], $c->value());
+    }
     
 }

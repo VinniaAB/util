@@ -144,6 +144,17 @@ class Collection
     }
 
     /**
+     * @param Closure $func
+     * @return Collection
+     */
+    public function sort(Closure $func): Collection
+    {
+        $items = $this->slice(0)->value();
+        usort($items, $func);
+        return new Collection($items);
+    }
+
+    /**
      * @return array
      */
     public function value(): array
