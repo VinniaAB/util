@@ -9,8 +9,9 @@ declare(strict_types = 1);
 
 namespace Vinnia\Util\Measurement;
 
+use JsonSerializable;
 
-class Amount
+class Amount implements JsonSerializable
 {
 
     /**
@@ -66,6 +67,25 @@ class Amount
     public function __toString()
     {
         return (string) $this->value;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'value' => $this->getValue(),
+            'unit' => $this->getUnit(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
 }
