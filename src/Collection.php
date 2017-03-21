@@ -155,6 +155,24 @@ class Collection
     }
 
     /**
+     * @return Collection
+     */
+    public function reverse(): self
+    {
+        return new self(array_reverse($this->items));
+    }
+
+    /**
+     * @param mixed $value
+     * @param bool $strict
+     * @return bool
+     */
+    public function contains($value, bool $strict = false): bool
+    {
+        return in_array($value, $this->items, $strict);
+    }
+
+    /**
      * @return array
      */
     public function value(): array

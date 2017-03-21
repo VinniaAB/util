@@ -111,5 +111,27 @@ class CollectionTest extends AbstractTest
 
         $this->assertEquals([3, 2, 1], $c->value());
     }
+
+    public function testReverse()
+    {
+        $a = new Collection(['a', 'b', 'c']);
+
+        $this->assertEquals(['c', 'b', 'a'], $a->reverse()->value());
+    }
+
+    public function testContains()
+    {
+        $a = new Collection(['a', 'b', 'c']);
+        $this->assertTrue($a->contains('a'));
+        $this->assertFalse($a->contains('d'));
+    }
+
+    public function testContainsStrict()
+    {
+        $a = new Collection([1, 2, 3]);
+        $this->assertTrue($a->contains('1', false));
+        $this->assertTrue($a->contains(1, true));
+        $this->assertFalse($a->contains('1', true));
+    }
     
 }
