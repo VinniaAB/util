@@ -173,6 +173,28 @@ class Collection
     }
 
     /**
+     * @return Collection
+     */
+    public function keys(): self
+    {
+        return new self(array_keys($this->items));
+    }
+
+    /**
+     * @param Closure $func
+     * @return mixed|null
+     */
+    public function find(Closure $func)
+    {
+        foreach ($this->items as $item) {
+            if ($func($item) === true) {
+                return $item;
+            }
+        }
+        return null;
+    }
+
+    /**
      * @return array
      */
     public function value(): array

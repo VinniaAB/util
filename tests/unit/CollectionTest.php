@@ -133,5 +133,29 @@ class CollectionTest extends AbstractTest
         $this->assertTrue($a->contains(1, true));
         $this->assertFalse($a->contains('1', true));
     }
+
+    public function testKeys()
+    {
+        $a = new Collection([
+            'a' => 1,
+            'b' => 2,
+            'c' => 3,
+        ]);
+        $this->assertEquals(['a', 'b', 'c'], $a->keys()->value());
+    }
+
+    public function testFind()
+    {
+        $a = new Collection([1, 2, 3]);
+        $value = $a->find(function ($b) { return $b === 1; });
+        $this->assertEquals(1, $value);
+    }
+
+    public function testFindWithNonExistentValue()
+    {
+        $a = new Collection([1, 2, 3]);
+        $value = $a->find(function ($b) { return $b === 4; });
+        $this->assertNull($value);
+    }
     
 }
