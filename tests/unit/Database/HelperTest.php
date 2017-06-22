@@ -38,7 +38,6 @@ class HelperTest extends AbstractTest
     {
         $this->helper->insert('car', ['make' => 'volvo', 'model' => 'xc90']);
         $cars = $this->db->queryAll('select * from car');
-        var_dump($cars);
         $this->assertCount(1, $cars);
         $this->assertEquals('volvo', $cars[0]['make']);
         $this->assertEquals('xc90', $cars[0]['model']);
@@ -49,7 +48,6 @@ class HelperTest extends AbstractTest
         $this->helper->insert('car', ['make' => 'volvo', 'model' => 'xc90']);
         $this->helper->update('car', ['model' => 'v70'], ['make' => 'volvo']);
         $cars = $this->db->queryAll('select * from car');
-        var_dump($cars);
         $this->assertCount(1, $cars);
         $this->assertEquals('volvo', $cars[0]['make']);
         $this->assertEquals('v70', $cars[0]['model']);
