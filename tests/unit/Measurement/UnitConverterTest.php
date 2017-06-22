@@ -58,7 +58,7 @@ class UnitConverterTest extends AbstractTest
 
     public function testThrowsOnInvalidConversion()
     {
-        $this->setExpectedException(\LogicException::class);
+        $this->expectException(\LogicException::class);
         new UnitConverter('m', 'lb');
     }
 

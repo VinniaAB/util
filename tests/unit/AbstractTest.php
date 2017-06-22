@@ -8,9 +8,9 @@
 
 namespace Vinnia\Util\Tests;
 
-use Codeception\TestCase\Test;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractTest extends Test
+abstract class AbstractTest extends TestCase
 {
 
 }
