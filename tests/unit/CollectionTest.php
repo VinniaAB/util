@@ -157,5 +157,39 @@ class CollectionTest extends AbstractTest
         $value = $a->find(function ($b) { return $b === 4; });
         $this->assertNull($value);
     }
+
+    public function testMin()
+    {
+        $values = new Collection([10, 3, 2, 6]);
+        $min = $values->min(function (int $value) { return $value; });
+        $this->assertEquals(2, $min);
+    }
+
+    public function testMax()
+    {
+        $values = new Collection([10, 3, 2, 6]);
+        $max = $values->max(function (int $value) { return $value; });
+        $this->assertEquals(10, $max);
+    }
+
+    public function testAverage()
+    {
+        $values = new Collection([10, 3, 2, 6]);
+        $avg = $values->average(function (int $value) { return $value; });
+        $this->assertEquals(5.25, $avg);
+    }
+
+    public function testUnique()
+    {
+        $values = new Collection(['a', 'a', 'b', 'c', 'd', 'd', 'd']);
+        $unique = $values->unique()->value();
+        $this->assertEquals(['a', 'b', 'c', 'd'], $unique);
+    }
+
+    public function testCount()
+    {
+        $values = new Collection([1, 2, 3]);
+        $this->assertEquals(3, $values->count());
+    }
     
 }

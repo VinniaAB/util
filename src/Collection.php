@@ -195,6 +195,56 @@ class Collection
     }
 
     /**
+     * @return Collection
+     */
+    public function unique(): self
+    {
+        return new self(array_values(array_unique($this->items)));
+    }
+
+    /**
+     * @param Closure $func
+     * @return mixed
+     */
+    public function min(Closure $func)
+    {
+        $values = $this->map($func)->value();
+        return min($values);
+    }
+
+    /**
+     * @param Closure $func
+     * @return mixed
+     */
+    public function max(Closure $func)
+    {
+        $values = $this->map($func)->value();
+        return max($values);
+    }
+
+    /**
+     * @param Closure $func
+     * @return float
+     */
+    public function average(Closure $func): float
+    {
+        $avg = 0.0;
+        $len = $this->count();
+        foreach ($this->items as $item) {
+            $avg += $func($item) / $len;
+        }
+        return $avg;
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->items);
+    }
+
+    /**
      * @return array
      */
     public function value(): array
