@@ -32,20 +32,20 @@ class Collection
      * @param Closure $func
      * @return Collection
      */
-    public function map(Closure $func): Collection
+    public function map(Closure $func): self
     {
-        return new Collection(array_map($func, $this->items));
+        return new static(array_map($func, $this->items));
     }
 
     /**
      * @param Closure $func
      * @return Collection
      */
-    public function filter(Closure $func): Collection
+    public function filter(Closure $func): self
     {
         $filtered = array_filter($this->items, $func);
         $values = array_values($filtered);
-        return new Collection($values);
+        return new static($values);
     }
 
     /**
@@ -99,20 +99,20 @@ class Collection
      * Does not preserve keys.
      * @return Collection
      */
-    public function flatten(): Collection
+    public function flatten(): self
     {
         $result = [];
         array_walk_recursive($this->items, function ($value) use (&$result) {
             $result[] = $value;
         });
-        return new Collection($result);
+        return new static($result);
     }
 
     /**
      * @param Closure $func
      * @return Collection
      */
-    public function flatMap(Closure $func): Collection
+    public function flatMap(Closure $func): self
     {
         return $this->flatten()->map($func);
     }
@@ -122,9 +122,9 @@ class Collection
      * @param int|null $length
      * @return Collection
      */
-    public function slice(int $offset, ?int $length = null): Collection
+    public function slice(int $offset, ?int $length = null): self
     {
-        return new Collection(array_slice($this->items, $offset, $length));
+        return new static(array_slice($this->items, $offset, $length));
     }
 
     /**
@@ -138,7 +138,7 @@ class Collection
     /**
      * @return Collection
      */
-    public function tail(): Collection
+    public function tail(): self
     {
         return $this->slice(1);
     }
@@ -147,11 +147,11 @@ class Collection
      * @param Closure $func
      * @return Collection
      */
-    public function sort(Closure $func): Collection
+    public function sort(Closure $func): self
     {
         $items = $this->slice(0)->value();
         usort($items, $func);
-        return new Collection($items);
+        return new static($items);
     }
 
     /**
@@ -159,7 +159,7 @@ class Collection
      */
     public function reverse(): self
     {
-        return new self(array_reverse($this->items));
+        return new static(array_reverse($this->items));
     }
 
     /**
@@ -177,7 +177,7 @@ class Collection
      */
     public function keys(): self
     {
-        return new self(array_keys($this->items));
+        return new static(array_keys($this->items));
     }
 
     /**
@@ -199,7 +199,7 @@ class Collection
      */
     public function unique(): self
     {
-        return new self(array_values(array_unique($this->items)));
+        return new static(array_values(array_unique($this->items)));
     }
 
     /**
