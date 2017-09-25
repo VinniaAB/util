@@ -51,4 +51,37 @@ class ArraysTest extends AbstractTest
         $this->assertEquals(['one' => 'two', 'two' => 'Hej'], $source);
     }
 
+    public function testFlatten()
+    {
+        $flat = Arrays::flatten([
+            'one' => [
+                'two',
+                'hi' => [],
+            ],
+            'three' => [],
+            'four' => 'hello',
+        ], '.');
+
+        $this->assertEquals([
+            'one.0' => 'two',
+            'one.hi' => [],
+            'three' => [],
+            'four' => 'hello',
+        ], $flat);
+    }
+
+    public function testFlattenKeys()
+    {
+        $flat = Arrays::flattenKeys([
+            'one' => [
+                'two',
+                'hi' => [],
+            ],
+            'three' => [],
+            'four' => 'hello',
+        ], '.');
+
+        $this->assertEquals(['one.0', 'one.hi', 'three', 'four'], $flat);
+    }
+
 }
