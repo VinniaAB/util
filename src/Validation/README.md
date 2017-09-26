@@ -10,6 +10,9 @@ Instantiate this class with an array of rules. Built-in rules are:
 - array
 - boolean
 - float
+- eq (equal)
+- ne (not equal)
+- in
 
 ```php
 use Vinnia\Util\Validation\Validator;
