@@ -37,6 +37,31 @@ class Validator
             'array' => new CallableRule('is_array', 'The "%s" property must be an array'),
             'boolean' => new CallableRule('is_bool', 'The "%s" property must be a boolean'),
             'float' => new CallableRule('is_float', 'The "%s" property must be a float'),
+            'eq' => function (string $key, string $rule, array $params) {
+                return new CallableRule(
+                    function ($value) use ($params) {
+                        return $value == $params[0];
+                    },
+                    "The \"%s\" property must be equal to \"{$params[0]}\""
+                );
+            },
+            'ne' => function (string $key, string $rule, array $params) {
+                return new CallableRule(
+                    function ($value) use ($params) {
+                        return $value != $params[0];
+                    },
+                    "The \"%s\" property cannot be equal to \"{$params[0]}\""
+                );
+            },
+            'in' => function (string $key, string $rule, array $params) {
+                $values = implode(',', $params);
+                return new CallableRule(
+                    function ($value) use ($params) {
+                        return in_array($value, $params);
+                    },
+                    "The \"%s\" property must be in \"{$values}\""
+                );
+            },
         ];
 
         $this->builtins['str'] = $this->builtins['string'];
@@ -55,11 +80,22 @@ class Validator
         $ruleSet = [];
         foreach ($rules as $key => $rule) {
             $ruleSet[$key] = [];
+
+            // rules are separated by "|"
             $exploded = explode('|', $rule);
             $instances = [];
             foreach ($exploded as $item) {
-                if (isset($this->builtins[$item])) {
-                    $instances[] = $this->builtins[$item];
+
+                // params are separated by ":"
+                $parts = explode(':', $item);
+                $ruleName = $parts[0];
+                $params = array_slice($parts, 1);
+
+                if (isset($this->builtins[$ruleName])) {
+                    $builtin = $this->builtins[$ruleName];
+                    $instances[] = is_callable($builtin) ?
+                        $builtin($key, $ruleName, $params) :
+                        $this->builtins[$ruleName];
                 }
             }
 

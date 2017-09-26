@@ -84,4 +84,53 @@ class ValidatorTest extends AbstractTest
         $this->assertCount(0, $bag);
     }
 
+    public function testEqualRule()
+    {
+        $validator = new Validator([
+            'prop' => 'eq:one',
+        ]);
+
+        $bag = $validator->validate([
+            'prop' => null,
+        ]);
+
+        $this->assertCount(1, $bag);
+
+        $bag = $validator->validate([
+            'prop' => 'one',
+        ]);
+
+        $this->assertCount(0, $bag);
+    }
+
+    public function testNotEqualRule()
+    {
+        $validator = new Validator([
+            'prop' => 'ne:one',
+        ]);
+        $bag = $validator->validate([
+            'prop' => 'one',
+        ]);
+        $this->assertCount(1, $bag);
+        $bag = $validator->validate([
+            'prop' => 'two',
+        ]);
+        $this->assertCount(0, $bag);
+    }
+
+    public function testInRule()
+    {
+        $validator = new Validator([
+            'prop' => 'in:1:2:3',
+        ]);
+        $bag = $validator->validate([
+            'prop' => 4
+        ]);
+        $this->assertCount(1, $bag);
+        $bag = $validator->validate([
+            'prop' => 3
+        ]);
+        $this->assertCount(0, $bag);
+    }
+
 }
