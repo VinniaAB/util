@@ -5,6 +5,7 @@ Namespace | Description
 --------- | -----------
 `\Vinnia\Util\Database` | Database tools
 `\Vinnia\Util\Measurement` | Unit conversion utilities
+`\Vinnia\Util\Validation` | Simple validation library
 `\Vinnia\Util` | Everything else :)
 
 ## Run the tests
