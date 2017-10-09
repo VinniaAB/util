@@ -88,4 +88,15 @@ class Amount implements JsonSerializable
         return $this->toArray();
     }
 
+    /**
+     * @param int $decimals
+     * @param string $decimalSeparator
+     * @param string $thousandsSeparator
+     * @return string
+     */
+    public function format(int $decimals, string $decimalSeparator = '.', string $thousandsSeparator = '')
+    {
+        return number_format($this->value, $decimals, $decimalSeparator, $thousandsSeparator);
+    }
+
 }
