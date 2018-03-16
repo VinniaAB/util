@@ -147,4 +147,18 @@ class ValidatorTest extends AbstractTest
         $this->assertCount(1, $bag->getErrors()['prop.3']);
     }
 
+    public function testRecognizesParentKeysOfDeepArrays()
+    {
+        $validator = new Validator([
+            'prop' => 'required|array',
+            'prop.*' => 'integer',
+        ]);
+
+        $bag = $validator->validate([
+            'prop' => [1, 2, 3],
+        ]);
+
+        $this->assertCount(0, $bag->getErrors());
+    }
+
 }

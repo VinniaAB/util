@@ -81,7 +81,13 @@ class ArraysTest extends AbstractTest
             'four' => 'hello',
         ], '.');
 
-        $this->assertEquals(['one.0', 'one.hi', 'three', 'four'], $flat);
+        $this->assertEquals([
+            'one',
+            'one.0',
+            'one.hi',
+            'three',
+            'four',
+        ], $flat);
     }
 
 }
