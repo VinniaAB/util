@@ -120,6 +120,10 @@ class Validator
         foreach ($this->ruleSet as $key => $rules) {
             $properties = $dataSet->getMatchingKeys($key);
 
+            // sometimes we don't find any matching properties
+            // but we still want to execute the rules on the
+            // whole rule key. this is useful for the "required"
+            // rule for example.
             if (empty($properties)) {
                 $properties = [null];
             }
