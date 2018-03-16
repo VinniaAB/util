@@ -50,4 +50,20 @@ class DataSet
         return $this->keys;
     }
 
+    /**
+     * @param string $ruleKey
+     * @return string[]
+     */
+    public function getMatchingKeys(string $ruleKey): array
+    {
+        $regex = '/^' . str_replace(['.', '*'], ['\.', '[^\.]+'], $ruleKey) . '$/';
+        $keys = [];
+        foreach ($this->keys as $key) {
+            if (preg_match($regex, $key) === 1) {
+                $keys[] = $key;
+            }
+        }
+        return $keys;
+    }
+
 }

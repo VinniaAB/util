@@ -11,6 +11,7 @@ namespace Vinnia\Util\Tests\Validation;
 
 
 use Vinnia\Util\Tests\AbstractTest;
+use Vinnia\Util\Validation\DataSet;
 use Vinnia\Util\Validation\Rule;
 
 class RuleTest extends AbstractTest
@@ -51,24 +52,24 @@ class RuleTest extends AbstractTest
 
     public function testGetMatchingKeysWithDotNotation()
     {
-        $data = [
-            'my.prop',
-            'my.other.prop',
-        ];
-        $props = $this->rule->getMatchingKeys($data, 'my.prop');
+        $data = new DataSet([
+            'my.prop' => 1,
+            'my.other.prop' => 2,
+        ]);
+        $props = $data->getMatchingKeys('my.prop');
 
         $this->assertEquals(['my.prop'], $props);
     }
 
     public function testGetsMultipleKeysWithWildcard()
     {
-        $data = [
-            'my.first.prop',
-            'my.second.prop',
-            'my.third.prop',
-            'my.four.thing',
-        ];
-        $props = $this->rule->getMatchingKeys($data, 'my.*.prop');
+        $data = new DataSet([
+            'my.first.prop' => 1,
+            'my.second.prop' => 2,
+            'my.third.prop' => 3,
+            'my.four.thing' => 4,
+        ]);
+        $props = $data->getMatchingKeys('my.*.prop');
         $this->assertEquals(['my.first.prop', 'my.second.prop', 'my.third.prop'], $props);
     }
 

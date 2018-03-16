@@ -34,7 +34,7 @@ class RequiredRule extends Rule
      */
     public function validateRuleKey(DataSet $dataSet, string $ruleKey): ErrorBag
     {
-        $props = $this->getMatchingKeys($dataSet->getKeys(), $ruleKey);
+        $props = $dataSet->getMatchingKeys($ruleKey);
         $bag = new ErrorBag;
 
         if (empty($props)) {

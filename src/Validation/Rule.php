@@ -22,30 +22,13 @@ abstract class Rule implements RuleInterface
     abstract protected function validateValue($value): bool;
 
     /**
-     * @param string[] $keys
-     * @param string $ruleKey
-     * @return array
-     */
-    public function getMatchingKeys(array $keys, string $ruleKey): array
-    {
-        $regex = '/^' . str_replace(['.', '*'], ['\.', '[^\.]+'], $ruleKey) . '$/';
-        $props = [];
-        foreach ($keys as $key) {
-            if (preg_match($regex, $key) === 1) {
-                $props[] = $key;
-            }
-        }
-        return $props;
-    }
-
-    /**
      * @param DataSet $dataSet
      * @param string $ruleKey
      * @return ErrorBag
      */
     public function validateRuleKey(DataSet $dataSet, string $ruleKey): ErrorBag
     {
-        $props = $this->getMatchingKeys($dataSet->getKeys(), $ruleKey);
+        $props = $dataSet->getMatchingKeys($ruleKey);
         $errors = new ErrorBag;
 
         foreach ($props as $prop) {
