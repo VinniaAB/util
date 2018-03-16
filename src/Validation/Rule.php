@@ -49,7 +49,7 @@ abstract class Rule implements RuleInterface
         $errors = new ErrorBag;
 
         foreach ($props as $prop) {
-            if (!$this->validateValue(Arrays::get($dataSet->getData(), $prop, '.'))) {
+            if (!$this->validateValue(Arrays::get($dataSet->getData(), $prop))) {
                 $errors->addError($prop, $this->getErrorMessage($prop));
             }
         }
