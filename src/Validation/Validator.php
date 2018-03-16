@@ -30,7 +30,7 @@ class Validator
     {
         $this->builtins = [
             'required' => new RequiredRule('The "%s" property is required'),
-            'nullable' => new CallableRule('is_null', 'The "%s" property must be null', 90, true, true),
+            'nullable' => new CallableRule('is_null', 'The "%s" property must be null', 90, true, false),
             'integer' => new CallableRule('is_int', 'The "%s" property must be an integer'),
             'string' => new CallableRule('is_string', 'The "%s" property must be a string'),
             'numeric' => new CallableRule('is_numeric', 'The "%s" property must be numeric'),
@@ -121,12 +121,12 @@ class Validator
             foreach ($rules as $rule) {
                 $e = $rule->validateRuleKey($dataSet, $key);
 
-                if ($e->count() === 0 && $rule->shouldBreakRuleChain()) {
-                    break;
+                if ($e->count() > 0 && $rule->yieldsErrors()) {
+                    $bag = $bag->mergeWith($e);
                 }
 
-                if (!$rule->isOptional()) {
-                    $bag = $bag->mergeWith($e);
+                if ($e->count() == 0 && $rule->breaksRuleChainOnSuccess()) {
+                    break;
                 }
             }
         }

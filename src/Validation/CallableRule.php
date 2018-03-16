@@ -5,6 +5,7 @@
  * Date: 2017-09-10
  * Time: 21:01
  */
+declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
@@ -30,41 +31,41 @@ class CallableRule extends Rule
     /**
      * @var bool
      */
-    private $shouldBreakRuleChain;
+    private $breaksRuleChainOnSuccess;
 
     /**
      * @var bool
      */
-    private $isOptional;
+    private $yieldsErrors;
 
     /**
      * CallableRule constructor.
      * @param callable $callable
      * @param string $errorMessage
      * @param int $priority
-     * @param bool $shouldBreakRuleChain
-     * @param bool $isOptional
+     * @param bool $breaksRuleChainOnSuccess
+     * @param bool $yieldsErrors
      */
     function __construct(
         callable $callable,
         string $errorMessage,
         int $priority = 100,
-        bool $shouldBreakRuleChain = false,
-        bool $isOptional = false
+        bool $breaksRuleChainOnSuccess = false,
+        bool $yieldsErrors = true
     )
     {
         $this->callable = $callable;
         $this->errorMessage = $errorMessage;
         $this->priority = $priority;
-        $this->shouldBreakRuleChain = $shouldBreakRuleChain;
-        $this->isOptional = $isOptional;
+        $this->breaksRuleChainOnSuccess = $breaksRuleChainOnSuccess;
+        $this->yieldsErrors = $yieldsErrors;
     }
 
     /**
      * @param mixed $value
      * @return bool
      */
-    public function validateValue($value): bool
+    protected function validateValue($value): bool
     {
         return call_user_func($this->callable, $value);
     }
@@ -73,7 +74,7 @@ class CallableRule extends Rule
      * @param string $property
      * @return string
      */
-    public function getErrorMessage(string $property): string
+    protected function getErrorMessage(string $property): string
     {
         return sprintf($this->errorMessage, $property);
     }
@@ -91,17 +92,17 @@ class CallableRule extends Rule
      * This rule can only succeed and will not generate any errors if it fails.
      * @return bool
      */
-    public function isOptional(): bool
+    public function yieldsErrors(): bool
     {
-        return $this->isOptional;
+        return $this->yieldsErrors;
     }
 
     /**
      * If this rule is valid we stop the validation here.
      * @return bool
      */
-    public function shouldBreakRuleChain(): bool
+    public function breaksRuleChainOnSuccess(): bool
     {
-        return $this->shouldBreakRuleChain;
+        return $this->breaksRuleChainOnSuccess;
     }
 }

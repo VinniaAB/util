@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Vinnia\Util\Validation;
 
 
-class RequiredRule extends Rule
+class RequiredRule implements RuleInterface
 {
 
     /**
@@ -38,28 +38,10 @@ class RequiredRule extends Rule
         $bag = new ErrorBag;
 
         if (empty($props)) {
-            $bag->addError($ruleKey, $this->getErrorMessage($ruleKey));
+            $bag->addError($ruleKey, sprintf($this->errorMessage, $ruleKey));
         }
 
         return $bag;
-    }
-
-    /**
-     * @param array|string $property
-     * @return string
-     */
-    public function getErrorMessage(string $property): string
-    {
-        return sprintf($this->errorMessage, $property);
-    }
-
-    /**
-     * @param mixed $value
-     * @return bool
-     */
-    public function validateValue($value): bool
-    {
-        return true;
     }
 
     /**
@@ -74,16 +56,16 @@ class RequiredRule extends Rule
      * This rule can only succeed and will not generate any errors if it fails.
      * @return bool
      */
-    public function isOptional(): bool
+    public function yieldsErrors(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * If this rule is valid we stop the validation here.
      * @return bool
      */
-    public function shouldBreakRuleChain(): bool
+    public function breaksRuleChainOnSuccess(): bool
     {
         return false;
     }

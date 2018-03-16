@@ -21,27 +21,21 @@ interface RuleInterface
     public function validateRuleKey(DataSet $dataSet, string $ruleKey): ErrorBag;
 
     /**
-     * @param string $property
-     * @return string
-     */
-    public function getErrorMessage(string $property): string;
-
-    /**
      * A higher value means this rule will be executed sooner
      * @return int
      */
     public function getPriority(): int;
 
     /**
-     * This rule can only succeed and will not generate any errors if it fails.
+     * Whether the errors of this rule should be included in the resulting error bag
      * @return bool
      */
-    public function isOptional(): bool;
+    public function yieldsErrors(): bool;
 
     /**
      * If this rule is valid we stop the validation here.
      * @return bool
      */
-    public function shouldBreakRuleChain(): bool;
+    public function breaksRuleChainOnSuccess(): bool;
 
 }

@@ -39,11 +39,11 @@ class RuleTest extends AbstractTest
             {
                 return 100;
             }
-            public function isOptional(): bool
+            public function yieldsErrors(): bool
             {
                 return false;
             }
-            public function shouldBreakRuleChain(): bool
+            public function breaksRuleChainOnSuccess(): bool
             {
                 return false;
             }

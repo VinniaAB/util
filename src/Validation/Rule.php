@@ -22,6 +22,12 @@ abstract class Rule implements RuleInterface
     abstract protected function validateValue($value): bool;
 
     /**
+     * @param string $prop
+     * @return string
+     */
+    abstract protected function getErrorMessage(string $prop): string;
+
+    /**
      * @param DataSet $dataSet
      * @param string $ruleKey
      * @return ErrorBag
