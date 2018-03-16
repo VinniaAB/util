@@ -18,12 +18,12 @@ class RequiredRuleTest extends AbstractRuleTest
     public function ruleResultProvider(): array
     {
         return [
-            [['prop' => 'value'], 'key', 1],
-            [['prop' => 'value'], 'prop', 0],
-            [['prop.other' => 'value'], 'key', 1],
-            [['prop.other' => 'value', 'key' => 'otherValue'], 'key', 0],
-            [['prop.other' => 'value'], 'prop.*', 0],
-            [['prop.other' => 'value'], 'prop.other', 0],
+            [['prop' => 'value'], 'key', null, 1],
+            [['prop' => 'value'], 'prop', null, 0],
+            [['prop.other' => 'value'], 'key', null, 1],
+            [['prop.other' => 'value', 'key' => 'otherValue'], 'key', null, 0],
+            [['prop.other' => 'value'], 'prop.*', null, 0],
+            [['prop.other' => 'value'], 'prop.other', null, 0],
         ];
     }
 

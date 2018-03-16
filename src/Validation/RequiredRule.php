@@ -30,9 +30,10 @@ class RequiredRule implements RuleInterface
     /**
      * @param DataSet $dataSet
      * @param string $ruleKey
+     * @param null|string $expandedKey
      * @return ErrorBag
      */
-    public function validateRuleKey(DataSet $dataSet, string $ruleKey): ErrorBag
+    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag
     {
         $props = $dataSet->getMatchingKeys($ruleKey);
         $bag = new ErrorBag;

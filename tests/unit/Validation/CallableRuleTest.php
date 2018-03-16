@@ -29,9 +29,9 @@ class CallableRuleTest extends AbstractRuleTest
     public function ruleResultProvider(): array
     {
         return [
-            [['prop' => true], 'prop', 0],
-            [['prop' => false], 'prop', 0],
-            [['prop' => 'one'], 'prop', 1],
+            [['prop' => true], 'prop', 'prop', 0],
+            [['prop' => false], 'prop', 'prop', 0],
+            [['prop' => 'one'], 'prop', 'prop', 1],
         ];
     }
 

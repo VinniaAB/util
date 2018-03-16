@@ -118,15 +118,23 @@ class Validator
         $bag = new ErrorBag();
 
         foreach ($this->ruleSet as $key => $rules) {
-            foreach ($rules as $rule) {
-                $e = $rule->validateRuleKey($dataSet, $key);
+            $properties = $dataSet->getMatchingKeys($key);
 
-                if ($e->count() > 0 && $rule->yieldsErrors()) {
-                    $bag = $bag->mergeWith($e);
-                }
+            if (empty($properties)) {
+                $properties = [null];
+            }
 
-                if ($e->count() == 0 && $rule->breaksRuleChainOnSuccess()) {
-                    break;
+            foreach ($properties as $property) {
+                foreach ($rules as $rule) {
+                    $e = $rule->validate($dataSet, $key, $property);
+
+                    if ($e->count() > 0 && $rule->yieldsErrors()) {
+                        $bag = $bag->mergeWith($e);
+                    }
+
+                    if ($e->count() == 0 && $rule->breaksRuleChainOnSuccess()) {
+                        break;
+                    }
                 }
             }
         }

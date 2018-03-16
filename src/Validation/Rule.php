@@ -30,17 +30,21 @@ abstract class Rule implements RuleInterface
     /**
      * @param DataSet $dataSet
      * @param string $ruleKey
+     * @param null|string $expandedKey
      * @return ErrorBag
      */
-    public function validateRuleKey(DataSet $dataSet, string $ruleKey): ErrorBag
+    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag
     {
-        $props = $dataSet->getMatchingKeys($ruleKey);
         $errors = new ErrorBag;
 
-        foreach ($props as $prop) {
-            if (!$this->validateValue(Arrays::get($dataSet->getData(), $prop))) {
-                $errors->addError($prop, $this->getErrorMessage($prop));
-            }
+        if (!$expandedKey) {
+            return $errors;
+        }
+
+        $value = Arrays::get($dataSet->getData(), $expandedKey);
+
+        if (!$this->validateValue($value)) {
+            $errors->addError($expandedKey, $this->getErrorMessage($expandedKey));
         }
 
         return $errors;

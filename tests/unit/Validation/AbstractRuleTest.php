@@ -31,11 +31,12 @@ abstract class AbstractRuleTest extends AbstractTest
      * @dataProvider ruleResultProvider
      * @param array $data
      * @param string $ruleKey
+     * @param null|string $expandedKey
      * @param int $errorCount
      */
-    public function testValidatesData(array $data, string $ruleKey, int $errorCount)
+    public function testValidatesData(array $data, string $ruleKey, ?string $expandedKey, int $errorCount)
     {
-        $errors = $this->getRule()->validateRuleKey(new DataSet($data), $ruleKey);
+        $errors = $this->getRule()->validate(new DataSet($data), $ruleKey, $expandedKey);
         $this->assertCount($errorCount, $errors);
     }
 

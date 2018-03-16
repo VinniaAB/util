@@ -133,4 +133,18 @@ class ValidatorTest extends AbstractTest
         $this->assertCount(0, $bag);
     }
 
+    public function testAddsErrorsForMultipleMatchingProperties()
+    {
+        $validator = new Validator([
+            'prop.*' => 'integer|nullable',
+        ]);
+
+        $bag = $validator->validate([
+            'prop' => [null, 2, '3', 'four'],
+        ]);
+
+        $this->assertCount(1, $bag->getErrors()['prop.2']);
+        $this->assertCount(1, $bag->getErrors()['prop.3']);
+    }
+
 }

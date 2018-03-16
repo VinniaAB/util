@@ -16,9 +16,10 @@ interface RuleInterface
     /**
      * @param DataSet $dataSet
      * @param string $ruleKey
+     * @param string|null $expandedKey
      * @return ErrorBag
      */
-    public function validateRuleKey(DataSet $dataSet, string $ruleKey): ErrorBag;
+    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag;
 
     /**
      * A higher value means this rule will be executed sooner
