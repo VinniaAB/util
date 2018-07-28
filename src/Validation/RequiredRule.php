@@ -36,9 +36,11 @@ class RequiredRule implements RuleInterface
     public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag
     {
         $props = $dataSet->getMatchingKeys($ruleKey);
+        $wildcardSize = $dataSet->getSizeOfRightmostWildcard($ruleKey);
+
         $bag = new ErrorBag;
 
-        if (empty($props)) {
+        if (empty($props) || $wildcardSize > count($props)) {
             $bag->addError($ruleKey, sprintf($this->errorMessage, $ruleKey));
         }
 

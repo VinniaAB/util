@@ -24,6 +24,13 @@ class RequiredRuleTest extends AbstractRuleTest
             [['prop.other' => 'value', 'key' => 'otherValue'], 'key', null, 0],
             [['prop.other' => 'value'], 'prop.*', null, 0],
             [['prop.other' => 'value'], 'prop.other', null, 0],
+            [['prop' => [
+                [
+                    'name' => 'Hello',
+                ],
+                [],
+                [],
+            ]], 'prop.*.name', null, 1],
         ];
     }
 

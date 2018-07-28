@@ -161,4 +161,22 @@ class ValidatorTest extends AbstractTest
         $this->assertCount(0, $bag->getErrors());
     }
 
+    public function testFailsWithArrayWhereSomeElementsFail()
+    {
+        $validator = new Validator([
+            'prop.*.color' => 'required',
+        ]);
+
+        $bag = $validator->validate([
+            'prop' => [
+                [
+                    'color' => 'red',
+                ],
+                [],
+            ],
+        ]);
+
+        $this->assertCount(1, $bag->getErrors());
+    }
+
 }
