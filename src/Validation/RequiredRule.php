@@ -40,6 +40,9 @@ class RequiredRule implements RuleInterface
 
         $bag = new ErrorBag;
 
+        // if the size of the rightmost wildcard (array)
+        // is greater than the number of matched properties,
+        // some properties are missing.
         if (empty($props) || $wildcardSize > count($props)) {
             $bag->addError($ruleKey, sprintf($this->errorMessage, $ruleKey));
         }
