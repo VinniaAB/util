@@ -62,6 +62,20 @@ class Validator
                     "The \"%s\" property must be in \"{$values}\""
                 );
             },
+            'min' => function (string $key, string $rule, array $params) {
+                return new SizeRule(
+                    SizeRule::COMPARE_GREATER_THAN_OR_EQUAL,
+                    (int) $params[0],
+                    "The \"%s\" property must be greater than or equal to {$params[0]}"
+                );
+            },
+            'max' => function (string $key, string $rule, array $params) {
+                return new SizeRule(
+                    SizeRule::COMPARE_LESS_THAN_OR_EQUAL,
+                    (int) $params[0],
+                    "The \"%s\" property must be less than or equal to {$params[0]}"
+                );
+            },
         ];
 
         $this->builtins['str'] = $this->builtins['string'];

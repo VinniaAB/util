@@ -179,4 +179,15 @@ class ValidatorTest extends AbstractTest
         $this->assertCount(1, $bag->getErrors());
     }
 
+    public function testRuleWithParams()
+    {
+        $validator = new Validator([
+            '*' => 'min:3',
+        ]);
+
+        $this->assertCount(0, $validator->validate([3, 'yee']));
+        $this->assertCount(1, $validator->validate([3, 'ye']));
+        $this->assertCount(2, $validator->validate([2, 'ye']));
+    }
+
 }
