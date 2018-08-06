@@ -19,26 +19,6 @@ class CallableRule extends Rule
     private $callable;
 
     /**
-     * @var string
-     */
-    private $errorMessage;
-
-    /**
-     * @var int
-     */
-    private $priority;
-
-    /**
-     * @var bool
-     */
-    private $breaksRuleChainOnSuccess;
-
-    /**
-     * @var bool
-     */
-    private $yieldsErrors;
-
-    /**
      * CallableRule constructor.
      * @param callable $callable
      * @param string $errorMessage
@@ -55,10 +35,8 @@ class CallableRule extends Rule
     )
     {
         $this->callable = $callable;
-        $this->errorMessage = $errorMessage;
-        $this->priority = $priority;
-        $this->breaksRuleChainOnSuccess = $breaksRuleChainOnSuccess;
-        $this->yieldsErrors = $yieldsErrors;
+
+        parent::__construct($errorMessage, $priority, $breaksRuleChainOnSuccess, $yieldsErrors);
     }
 
     /**
@@ -70,39 +48,4 @@ class CallableRule extends Rule
         return call_user_func($this->callable, $value);
     }
 
-    /**
-     * @param string $property
-     * @return string
-     */
-    protected function getErrorMessage(string $property): string
-    {
-        return sprintf($this->errorMessage, $property);
-    }
-
-    /**
-     * A higher value means this rule will be executed sooner
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return $this->priority;
-    }
-
-    /**
-     * This rule can only succeed and will not generate any errors if it fails.
-     * @return bool
-     */
-    public function yieldsErrors(): bool
-    {
-        return $this->yieldsErrors;
-    }
-
-    /**
-     * If this rule is valid we stop the validation here.
-     * @return bool
-     */
-    public function breaksRuleChainOnSuccess(): bool
-    {
-        return $this->breaksRuleChainOnSuccess;
-    }
 }

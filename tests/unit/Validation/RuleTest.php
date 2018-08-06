@@ -26,7 +26,12 @@ class RuleTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->rule = new class extends Rule {
+        $this->rule = new class('') extends Rule {
+            function __construct(string $errorMessage, int $priority = 100, bool $breaksRuleChainOnSuccess = false, bool $yieldsErrors = true)
+            {
+                parent::__construct($errorMessage, $priority, $breaksRuleChainOnSuccess, $yieldsErrors);
+            }
+
             public function validateValue($value): bool
             {
                 return true;

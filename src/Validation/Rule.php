@@ -16,6 +16,46 @@ abstract class Rule implements RuleInterface
 {
 
     /**
+     * @var string
+     */
+    protected $errorMessage;
+
+    /**
+     * @var int
+     */
+    protected $priority;
+
+    /**
+     * @var bool
+     */
+    protected $breaksRuleChainOnSuccess;
+
+    /**
+     * @var bool
+     */
+    protected $yieldsErrors;
+
+    /**
+     * Rule constructor.
+     * @param string $errorMessage
+     * @param int $priority
+     * @param bool $breaksRuleChainOnSuccess
+     * @param bool $yieldsErrors
+     */
+    function __construct(
+        string $errorMessage,
+        int $priority = 100,
+        bool $breaksRuleChainOnSuccess = false,
+        bool $yieldsErrors = true
+    )
+    {
+        $this->errorMessage = $errorMessage;
+        $this->priority = $priority;
+        $this->breaksRuleChainOnSuccess = $breaksRuleChainOnSuccess;
+        $this->yieldsErrors = $yieldsErrors;
+    }
+
+    /**
      * @param mixed $value
      * @return bool
      */
@@ -25,7 +65,34 @@ abstract class Rule implements RuleInterface
      * @param string $prop
      * @return string
      */
-    abstract protected function getErrorMessage(string $prop): string;
+    protected function getErrorMessage(string $prop): string
+    {
+        return sprintf($this->errorMessage, $prop);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @return bool
+     */
+    public function breaksRuleChainOnSuccess(): bool
+    {
+        return $this->breaksRuleChainOnSuccess;
+    }
+
+    /**
+     * @return bool
+     */
+    public function yieldsErrors(): bool
+    {
+        return $this->yieldsErrors;
+    }
 
     /**
      * @param DataSet $dataSet
