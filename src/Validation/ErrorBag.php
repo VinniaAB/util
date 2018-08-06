@@ -56,11 +56,11 @@ class ErrorBag implements Countable
         $bag = new ErrorBag();
 
         foreach ($this->errors as $property => $messages) {
-            $bag->addErrors($property, $messages);
+            $bag->addErrors((string) $property, $messages);
         }
 
         foreach ($other->errors as $property => $messages) {
-            $bag->addErrors($property, $messages);
+            $bag->addErrors((string) $property, $messages);
         }
 
         return $bag;

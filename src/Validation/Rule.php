@@ -104,7 +104,7 @@ abstract class Rule implements RuleInterface
     {
         $errors = new ErrorBag;
 
-        if (!$expandedKey) {
+        if ($expandedKey === null) {
             return $errors;
         }
 
