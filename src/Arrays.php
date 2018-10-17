@@ -59,7 +59,7 @@ class Arrays
     public static function flatten(array $data, string $keyDelimiter = '.'): array
     {
         $flattener = function (array &$out, string $prefix, array $data) use (&$flattener, $keyDelimiter) {
-            $prefix = empty($prefix) ? '' : "$prefix$keyDelimiter";
+            $prefix = $prefix === '' ? '' : "$prefix$keyDelimiter";
             foreach ($data as $key => $value) {
                 if (is_array($value) && !empty($value)) {
                     $flattener($out, "$prefix$key", $value);
@@ -83,7 +83,7 @@ class Arrays
     public static function flattenKeys(array $data, string $keyDelimiter = '.'): array
     {
         $flattener = function (array &$out, string $prefix, array $data) use (&$flattener, $keyDelimiter) {
-            $prefix = empty($prefix) ? '' : "$prefix$keyDelimiter";
+            $prefix = $prefix === '' ? '' : "$prefix$keyDelimiter";
             foreach ($data as $key => $value) {
                 $out[] = $prefix . $key;
                 if (is_array($value) && !empty($value)) {

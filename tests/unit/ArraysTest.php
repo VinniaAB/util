@@ -70,6 +70,23 @@ class ArraysTest extends AbstractTest
         ], $flat);
     }
 
+    public function testFlattenWithNumericKeys()
+    {
+        $flat = Arrays::flatten([
+            [
+                'yee' => 'boi',
+            ],
+            [
+                'yee' => 'boi',
+            ],
+        ]);
+
+        $this->assertEquals([
+            '0.yee' => 'boi',
+            '1.yee' => 'boi',
+        ], $flat);
+    }
+
     public function testFlattenKeys()
     {
         $flat = Arrays::flattenKeys([
