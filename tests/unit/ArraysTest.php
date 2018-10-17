@@ -107,4 +107,10 @@ class ArraysTest extends AbstractTest
         ], $flat);
     }
 
+    public function testIsNumericKeyArray()
+    {
+        $this->assertTrue(Arrays::isNumericKeyArray([1, 2, 3]));
+        $this->assertFalse(Arrays::isNumericKeyArray(['yee' => 'boi']));
+    }
+
 }

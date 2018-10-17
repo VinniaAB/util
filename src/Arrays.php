@@ -96,4 +96,18 @@ class Arrays
         return $out;
     }
 
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public static function isNumericKeyArray(array $data): bool
+    {
+        foreach ($data as $key => $value) {
+            if (!is_integer($key)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
