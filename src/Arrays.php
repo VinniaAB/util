@@ -5,6 +5,7 @@
  * Date: 2017-06-22
  * Time: 14:06
  */
+declare(strict_types = 1);
 
 namespace Vinnia\Util;
 
@@ -16,15 +17,16 @@ class Arrays
      * Get an array element with dot notation.
      * @param array $source
      * @param string $key
+     * @param mixed|null $default
      * @return mixed|null
      */
-    public static function get(array $source, string $key)
+    public static function get(array $source, string $key, $default = null)
     {
         $parts = explode('.', $key);
         $slice = $source;
         foreach ($parts as $part) {
-            if (!isset($slice[$part])) {
-                return null;
+            if (!array_key_exists($part, $slice)) {
+                return $default;
             }
             $slice = $slice[$part];
         }

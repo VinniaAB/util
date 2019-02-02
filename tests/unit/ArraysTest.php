@@ -113,4 +113,9 @@ class ArraysTest extends AbstractTest
         $this->assertFalse(Arrays::isNumericKeyArray(['yee' => 'boi']));
     }
 
+    public function testReturnsDefaultValueWhenKeyDoesNotExist()
+    {
+        $this->assertEquals(15, Arrays::get([], 'yee', 15));
+    }
+
 }
