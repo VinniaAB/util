@@ -9,10 +9,14 @@ declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
+use RuntimeException;
 
+/**
+ * Class RequiredRule
+ * @package Vinnia\Util\Validation
+ */
 class RequiredRule implements RuleInterface
 {
-
     /**
      * @var string
      */
@@ -35,16 +39,34 @@ class RequiredRule implements RuleInterface
      */
     public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag
     {
-        $props = $dataSet->getMatchingKeys($ruleKey);
-        $wildcardSize = $dataSet->getSizeOfRightmostWildcard($ruleKey);
+        $parents = $dataSet->getParentElements($ruleKey);
 
-        $bag = new ErrorBag;
+        // extract the last part of the rule key. this is
+        // usually everything after the last "." or the whole
+        // key if there is no dot.
+        if (preg_match('/\.?([^\.]+)$/', $ruleKey, $matches) !== 1) {
+            throw new RuntimeException("Could not find end of key \"$ruleKey\"");
+        }
 
-        // if the size of the rightmost wildcard (array)
-        // is greater than the number of matched properties,
-        // some properties are missing.
-        if (empty($props) || $wildcardSize > count($props)) {
-            $bag->addError($ruleKey, sprintf($this->errorMessage, $ruleKey));
+        $endOfKey = $matches[1];
+        $bag = new ErrorBag();
+
+        // when we have all parent elements we can compare
+        // them against the last part of the rule key. if
+        // there are no
+        foreach ($parents as $parentKey => $element) {
+            $childSet = new DataSet($element);
+            $keys = $childSet->getMatchingKeys($endOfKey);
+
+            if (empty($keys)) {
+                $fullKey = implode('.', array_filter([$parentKey, $endOfKey], function (string $key) {
+                    // the only time when we don't want to
+                    // include the parent key in the path is
+                    // when the parent is the root data set.
+                    return $key !== DataSet::PARENT_KEY_ROOT;
+                }));
+                $bag->addError($fullKey, sprintf($this->errorMessage, $fullKey));
+            }
         }
 
         return $bag;
@@ -75,5 +97,4 @@ class RequiredRule implements RuleInterface
     {
         return false;
     }
-
 }

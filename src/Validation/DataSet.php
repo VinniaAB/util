@@ -14,7 +14,7 @@ use Vinnia\Util\Collection;
 
 class DataSet
 {
-
+    const PARENT_KEY_ROOT = '';
     /**
      * @var array
      */
@@ -68,27 +68,40 @@ class DataSet
     }
 
     /**
+     * Returns all matching parents for the rule key. Calling
+     * this with a key "a.*.b" would return all elements matching
+     * the key "a.*". Similarly, calling it with "a.*" would return
+     * the element "a". Finally, calling it with "a" would return
+     * the whole data set since "a" has no other parent.
+     *
      * @param string $ruleKey
-     * @return int
+     * @return mixed[][]
      */
-    public function getSizeOfRightmostWildcard(string $ruleKey): int
+    public function getParentElements(string $ruleKey): array
     {
-        if (preg_match('/^(.*)\.\*\.[^\*]+$/', $ruleKey, $matches) === 1) {
-            $rightmostKey = $matches[1];
+        $parentElements = [];
 
-            // the rule key might contain more than
-            // one wildcard. therefore we must match
-            // our rightmost key against the data and
-            // sum the resulting values.
-            $matchingSlices = $this->getMatchingKeys($rightmostKey);
+        // first we must determine if this element has a sub-level
+        // parent. if it does, extract it. otherwise we can be certain
+        // that the parent is actually the complete data set.
+        if (preg_match('/^(.*)\.[^\.]+$/', $ruleKey, $matches) === 1) {
+            $parentKey = $matches[1];
 
-            return (new Collection($matchingSlices))->reduce(function (int $carry, string $key): int {
+            foreach ($this->getMatchingKeys($parentKey) as $key) {
                 $data = Arrays::get($this->data, $key);
-                return $carry + count($data);
-            }, 0);
+
+                // this conditional is kind of strange but makes sense
+                // when you consider that this is likely a user error.
+                // we have successfully found a parent element but it
+                // is not an array - something must be very wrong. therefore
+                // we implicitly "invalidate" the element and return
+                // an empty array instead.
+                $parentElements[$key] = is_array($data) ? $data : [];
+            }
+        } else {
+            $parentElements[static::PARENT_KEY_ROOT] = $this->data;
         }
 
-        return 0;
+        return $parentElements;
     }
-
 }

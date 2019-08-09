@@ -190,4 +190,23 @@ class ValidatorTest extends AbstractTest
         $this->assertCount(2, $validator->validate([2, 'ye']));
     }
 
+    public function testRequiredValidation()
+    {
+        $v = new Validator([
+            '*.a' => 'required',
+            '0.a' => 'integer',
+        ]);
+
+        $bag = $v->validate([
+            [
+                'b' => '',
+            ],
+            [
+                'c' => 1,
+            ],
+        ]);
+
+        $keys = array_keys($bag->getErrors());
+        $this->assertEquals(['0.a', '1.a'], $keys);
+    }
 }

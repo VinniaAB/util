@@ -15,76 +15,44 @@ use Vinnia\Util\Validation\DataSet;
 
 class DataSetTest extends AbstractTest
 {
-
-    public function testGetMatchingKeys()
+    /**
+     * @return array
+     */
+    public function parentElementProvider()
     {
-        $set = new DataSet([
-            'prop' => [
-                [
-                    'name' => 'yee',
-                ],
-                [
-                    'name' => 'boi'
-                ],
-                [
-
-                ]
+        return [
+            [
+                ['a' => 1], 'a', ['' => ['a' => 1]],
             ],
-        ]);
-
-        $keys = $set->getMatchingKeys('prop.*.name');
-
-        $this->assertEquals(['prop.0.name', 'prop.1.name'], $keys);
+            [
+                [[1], [2], [3]], '*.0', ['0' =>[1], '1' => [2], '2' => [3]]
+            ],
+            [
+                ['a' => [1, 2, 3]], 'a.*', ['a' => [1, 2, 3]],
+            ],
+            [
+                ['a' => ['b' => [1, 2, 3], 'c' => [4, 5, 6]]], 'a.*.*', ['a.b' => [1, 2, 3], 'a.c' => [4, 5, 6]],
+            ],
+        ];
     }
 
-    public function testGetSizeOfRightmostWildcard()
+    /**
+     * @dataProvider parentElementProvider
+     * @param array $data
+     * @param string $key
+     * @param array $expected
+     */
+    public function testGetParentElements(array $data, string $key, array $expected)
     {
-        $set = new DataSet([
-            'prop' => [
-                [
-                    'name' => 'yee',
-                ],
-                [
-                    'name' => 'boi'
-                ],
-                [
-                ]
-            ],
-        ]);
-
-        $size = $set->getSizeOfRightmostWildcard('prop.*.name');
-
-        $this->assertEquals(3, $size);
+        $set = new DataSet($data);
+        $this->assertEquals($expected, $set->getParentElements($key));
     }
 
-    public function testGetSizeOfRightmostWildcardWithDeepNesting()
+    public function testReturnsEmptyArrayForParentElementWhenNonArrayIsFound()
     {
         $set = new DataSet([
-            'prop' => [
-                [
-                    'names' => [
-                        [
-                            'value' => 'yee',
-                        ]
-                    ],
-                ],
-                [
-                    'names' => [
-                        [
-                            'value' => 'yee',
-                        ]
-                    ],
-                ],
-                [
-                    'names' => [
-                        [],
-                    ],
-                ]
-            ],
+            'a' => 1,
         ]);
-
-        $size = $set->getSizeOfRightmostWildcard('prop.*.names.*.value');
-
-        $this->assertEquals(3, $size);
+        $this->assertEquals(['a' => []], $set->getParentElements('a.*'));
     }
 }
