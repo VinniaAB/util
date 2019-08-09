@@ -11,6 +11,7 @@ namespace Vinnia\Util\Validation;
 
 
 use Vinnia\Util\Arrays;
+use Vinnia\Util\TemplateString;
 
 abstract class Rule implements RuleInterface
 {
@@ -69,7 +70,11 @@ abstract class Rule implements RuleInterface
      */
     protected function getErrorMessage(string $prop, array $params = []): string
     {
-        return sprintf($this->errorMessage, $prop, ...$params);
+        $prefixed = array_reduce(array_keys($params), function (array $carry, $key) use ($params) {
+            $carry['param_' . $key] = $params[$key];
+            return $carry;
+        }, []);
+        return (new TemplateString($this->errorMessage))->render(array_merge(['property' => $prop], $prefixed));
     }
 
     /**

@@ -17,8 +17,6 @@ use Vinnia\Util\Validation\SizeRule;
 
 class SizeRuleTest extends TestCase
 {
-
-
     /**
      * @return array
      */
@@ -93,16 +91,16 @@ class SizeRuleTest extends TestCase
     /**
      * @dataProvider ruleResultProvider
      * @param int $comparison
-     * @param $compareTo
+     * @param int $compareTo
      * @param array $data
      * @param string $ruleKey
      * @param null|string $expandedKey
      * @param int $errorCount
      */
-    public function testSizeRule(int $comparison, $compareTo, array $data, string $ruleKey, ?string $expandedKey, int $errorCount)
+    public function testSizeRule(string $comparison, int $compareTo, array $data, string $ruleKey, ?string $expandedKey, int $errorCount)
     {
-        $rule = new SizeRule($comparison, $compareTo, '');
-        $bag = $rule->validate(new DataSet($data), $ruleKey, $expandedKey);
+        $rule = new SizeRule('Prop: {{property}}, Comparison: {{param_0}}, Target: {{param_1}}');
+        $bag = $rule->validate(new DataSet($data), $ruleKey, $expandedKey, [$comparison, $compareTo]);
         $this->assertCount($errorCount, $bag);
     }
 

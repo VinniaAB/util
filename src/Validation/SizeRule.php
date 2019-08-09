@@ -15,46 +15,12 @@ namespace Vinnia\Util\Validation;
  */
 class SizeRule extends Rule
 {
-
-    const COMPARE_LESS_THAN = 1;
-    const COMPARE_LESS_THAN_OR_EQUAL = 2;
-    const COMPARE_EQUAL = 3;
-    const COMPARE_GREATER_THAN = 4;
-    const COMPARE_GREATER_THAN_OR_EQUAL = 5;
-
-    /**
-     * @var int
-     */
-    protected $comparison;
-
-    /**
-     * @var int
-     */
-    protected $targetSize;
-
-    /**
-     * SizeRule constructor.
-     * @param int $comparison
-     * @param $targetSize
-     * @param string $errorMessage
-     * @param int $priority
-     * @param bool $breaksRuleChainOnSuccess
-     * @param bool $yieldsErrors
-     */
-    function __construct(
-        int $comparison,
-        int $targetSize,
-        string $errorMessage,
-        int $priority = 100,
-        bool $breaksRuleChainOnSuccess = false,
-        bool $yieldsErrors = true
-    )
-    {
-        $this->comparison = $comparison;
-        $this->targetSize = $targetSize;
-
-        parent::__construct($errorMessage, $priority, $breaksRuleChainOnSuccess, $yieldsErrors);
-    }
+    const COMPARE_LESS_THAN = 'lt';
+    const COMPARE_LESS_THAN_OR_EQUAL = 'lte';
+    const COMPARE_EQUAL = 'eq';
+    const COMPARE_GREATER_THAN = 'gt';
+    const COMPARE_GREATER_THAN_OR_EQUAL = 'gte';
+    const COMPARE_NOT_EQUAL = 'ne';
 
     /**
      * @param mixed $value
@@ -81,23 +47,25 @@ class SizeRule extends Rule
      */
     protected function validateValue($value, array $params = []): bool
     {
+        $comparison = $params[0];
         $a = $this->getSizeOf($value);
-        $b = $this->targetSize;
+        $b = (int) $params[1];
 
-        switch ($this->comparison) {
+        switch ($comparison) {
             case static::COMPARE_LESS_THAN:
                 return $a < $b;
             case static::COMPARE_LESS_THAN_OR_EQUAL:
                 return $a <= $b;
             case static::COMPARE_EQUAL:
-                return  $a == $b;
+                return $a == $b;
             case static::COMPARE_GREATER_THAN:
                 return $a > $b;
             case static::COMPARE_GREATER_THAN_OR_EQUAL:
                 return $a >= $b;
+            case static::COMPARE_NOT_EQUAL:
+                return $a != $b;
         }
 
         return false;
     }
-
 }

@@ -19,15 +19,17 @@ class ValidatorTest extends AbstractTest
     public function testWorksWithStringRules()
     {
         $validator = new Validator([
-            'prop' => 'required',
+            'prop.*.hello' => 'required',
         ]);
 
         $errors = $validator->validate([
-            'hello' => 'world',
+            'prop' => [
+                []
+            ],
         ]);
 
         $this->assertCount(1, $errors);
-        $this->assertEquals('The "prop" property is required', $errors->getErrors()['prop'][0]);
+        $this->assertEquals('The "prop.0.hello" property is required', $errors->getErrors()['prop.0.hello'][0]);
     }
 
     public function testCombinesMultipleStringRulesWithOneFailing()

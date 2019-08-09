@@ -29,54 +29,35 @@ class Validator
     function __construct(array $rules)
     {
         $this->builtins = [
-            'required' => new RequiredRule('The "%s" property is required'),
-            'nullable' => new CallableRule('is_null', 'The "%s" property must be null', 90, true, false),
-            'integer' => new CallableRule('is_int', 'The "%s" property must be an integer'),
-            'string' => new CallableRule('is_string', 'The "%s" property must be a string'),
-            'numeric' => new CallableRule('is_numeric', 'The "%s" property must be numeric'),
-            'array' => new CallableRule('is_array', 'The "%s" property must be an array'),
-            'boolean' => new CallableRule('is_bool', 'The "%s" property must be a boolean'),
-            'float' => new CallableRule('is_float', 'The "%s" property must be a float'),
-            'eq' => function (string $key, string $rule, array $params) {
-                return new CallableRule(
-                    function ($value) use ($params) {
-                        return $value == $params[0];
-                    },
-                    "The \"%s\" property must be equal to \"{$params[0]}\""
-                );
-            },
-            'ne' => function (string $key, string $rule, array $params) {
-                return new CallableRule(
-                    function ($value) use ($params) {
-                        return $value != $params[0];
-                    },
-                    "The \"%s\" property cannot be equal to \"{$params[0]}\""
-                );
-            },
-            'in' => function (string $key, string $rule, array $params) {
-                $values = implode(',', $params);
-                return new CallableRule(
-                    function ($value) use ($params) {
-                        return in_array($value, $params);
-                    },
-                    "The \"%s\" property must be in \"{$values}\""
-                );
-            },
-            'min' => function (string $key, string $rule, array $params) {
-                return new SizeRule(
-                    SizeRule::COMPARE_GREATER_THAN_OR_EQUAL,
-                    (int) $params[0],
-                    "The \"%s\" property must be greater than or equal to {$params[0]}"
-                );
-            },
-            'max' => function (string $key, string $rule, array $params) {
-                return new SizeRule(
-                    SizeRule::COMPARE_LESS_THAN_OR_EQUAL,
-                    (int) $params[0],
-                    "The \"%s\" property must be less than or equal to {$params[0]}"
-                );
-            },
-            'date_format' => new DateRule('The "%s" property must be a date of format "%s"'),
+            'required' => new RequiredRule('The "{{property}}" property is required'),
+            'nullable' => new CallableRule('is_null', 'The "{{property}}" property must be null', 90, true, false),
+            'integer' => new CallableRule('is_int', 'The "{{property}}" property must be an integer'),
+            'string' => new CallableRule('is_string', 'The "{{property}}" property must be a string'),
+            'numeric' => new CallableRule('is_numeric', 'The "{{property}}" property must be numeric'),
+            'array' => new CallableRule('is_array', 'The "{{property}}" property must be an array'),
+            'boolean' => new CallableRule('is_bool', 'The "{{property}}" property must be a boolean'),
+            'float' => new CallableRule('is_float', 'The "{{property}}" property must be a float'),
+            'eq' => new CallableRule(function ($value, array $params = []) {
+                return $value == $params[0];
+            }, 'The "{{property}}" property must be equal to "{{param_0}}"'),
+            'ne' => new CallableRule(function ($value, array $params = []) {
+                return $value != $params[0];
+            }, 'The "{{property}}" property must not be equal to "{{param_0}}"'),
+
+            // TODO: fix the error message of this rule. needs
+            // something a little bit more dynamic.
+            'in' => new CallableRule(function ($value, array $params = []) {
+                return in_array($value, $params);
+            }, 'The "{{property}}" property is not in the allowed set of values'),
+            'min' => new BoundParametersRule(
+                new SizeRule('The "{{property}}" property must be greater than or equal to "{{param_1}}"'),
+                [SizeRule::COMPARE_GREATER_THAN_OR_EQUAL]
+            ),
+            'max' => new BoundParametersRule(
+                new SizeRule('The "{{property}}" property must be less than or equal to "{{param_1}}"'),
+                [SizeRule::COMPARE_LESS_THAN_OR_EQUAL]
+            ),
+            'date_format' => new DateRule('The "{{property}}" property must be a date of format "{{param_0}}"'),
         ];
 
         $this->builtins['str'] = $this->builtins['string'];
@@ -107,10 +88,7 @@ class Validator
                 $params = array_slice($parts, 1);
 
                 if (isset($this->builtins[$ruleName])) {
-                    $builtin = $this->builtins[$ruleName];
-                    $instances[] = is_callable($builtin) ?
-                        $builtin($key, $ruleName, $params) :
-                        $this->builtins[$ruleName];
+                    $instances[] = new BoundParametersRule($this->builtins[$ruleName], $params);
                 }
             }
 

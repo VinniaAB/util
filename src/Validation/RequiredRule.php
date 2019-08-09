@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Vinnia\Util\Validation;
 
 use RuntimeException;
+use Vinnia\Util\TemplateString;
 
 /**
  * Class RequiredRule
@@ -62,7 +63,9 @@ class RequiredRule implements RuleInterface
                     // when the parent is the root data set.
                     return $key !== DataSet::PARENT_KEY_ROOT;
                 }));
-                $bag->addError($fullKey, sprintf($this->errorMessage, $fullKey));
+                $bag->addError($fullKey, (new TemplateString($this->errorMessage))->render([
+                    'property' => $fullKey,
+                ]));
             }
         }
 
