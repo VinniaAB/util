@@ -31,10 +31,9 @@ class DateRule extends Rule
     }
 
     /**
-     * @param mixed $value
-     * @return bool
+     * @inheritDoc
      */
-    protected function validateValue($value): bool
+    protected function validateValue($value, array $params = []): bool
     {
         return DateTimeImmutable::createFromFormat($this->format, $value) !== false;
     }

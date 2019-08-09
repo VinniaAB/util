@@ -77,10 +77,9 @@ class SizeRule extends Rule
     }
 
     /**
-     * @param mixed $value
-     * @return bool
+     * @inheritDoc
      */
-    protected function validateValue($value): bool
+    protected function validateValue($value, array $params = []): bool
     {
         $a = $this->getSizeOf($value);
         $b = $this->targetSize;

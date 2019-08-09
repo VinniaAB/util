@@ -32,11 +32,11 @@ class RuleTest extends AbstractTest
                 parent::__construct($errorMessage, $priority, $breaksRuleChainOnSuccess, $yieldsErrors);
             }
 
-            public function validateValue($value): bool
+            public function validateValue($value, array $params = []): bool
             {
                 return true;
             }
-            public function getErrorMessage(string $property): string
+            public function getErrorMessage(string $property, array $params = []): string
             {
                 return '';
             }

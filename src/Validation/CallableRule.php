@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
+use ReflectionFunction;
 
 class CallableRule extends Rule
 {
@@ -17,6 +18,11 @@ class CallableRule extends Rule
      * @var callable
      */
     private $callable;
+
+    /**
+     * @var int
+     */
+    private $numberOfParameters;
 
     /**
      * CallableRule constructor.
@@ -35,17 +41,21 @@ class CallableRule extends Rule
     )
     {
         $this->callable = $callable;
+        $this->numberOfParameters = (new ReflectionFunction($callable))->getNumberOfParameters();
 
         parent::__construct($errorMessage, $priority, $breaksRuleChainOnSuccess, $yieldsErrors);
     }
 
     /**
-     * @param mixed $value
-     * @return bool
+     * @inheritDoc
      */
-    protected function validateValue($value): bool
+    protected function validateValue($value, array $params = []): bool
     {
-        return call_user_func($this->callable, $value);
+        if ($this->numberOfParameters === 1) {
+            return call_user_func($this->callable, $value);
+        }
+
+        return call_user_func($this->callable, $value, $params);
     }
 
 }

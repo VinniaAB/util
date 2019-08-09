@@ -32,12 +32,9 @@ class RequiredRule implements RuleInterface
     }
 
     /**
-     * @param DataSet $dataSet
-     * @param string $ruleKey
-     * @param null|string $expandedKey
-     * @return ErrorBag
+     * @inheritDoc
      */
-    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag
+    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey, array $params = []): ErrorBag
     {
         $parents = $dataSet->getParentElements($ruleKey);
 

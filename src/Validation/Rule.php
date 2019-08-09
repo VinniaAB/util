@@ -57,17 +57,19 @@ abstract class Rule implements RuleInterface
 
     /**
      * @param mixed $value
+     * @param string[] $params
      * @return bool
      */
-    abstract protected function validateValue($value): bool;
+    abstract protected function validateValue($value, array $params = []): bool;
 
     /**
      * @param string $prop
+     * @param array $params
      * @return string
      */
-    protected function getErrorMessage(string $prop): string
+    protected function getErrorMessage(string $prop, array $params = []): string
     {
-        return sprintf($this->errorMessage, $prop);
+        return sprintf($this->errorMessage, $prop, ...$params);
     }
 
     /**
@@ -95,12 +97,9 @@ abstract class Rule implements RuleInterface
     }
 
     /**
-     * @param DataSet $dataSet
-     * @param string $ruleKey
-     * @param null|string $expandedKey
-     * @return ErrorBag
+     * @inheritDoc
      */
-    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey): ErrorBag
+    public function validate(DataSet $dataSet, string $ruleKey, ?string $expandedKey, array $params = []): ErrorBag
     {
         $errors = new ErrorBag;
 
@@ -110,8 +109,8 @@ abstract class Rule implements RuleInterface
 
         $value = Arrays::get($dataSet->getData(), $expandedKey);
 
-        if (!$this->validateValue($value)) {
-            $errors->addError($expandedKey, $this->getErrorMessage($expandedKey));
+        if (!$this->validateValue($value, $params)) {
+            $errors->addError($expandedKey, $this->getErrorMessage($expandedKey, $params));
         }
 
         return $errors;
