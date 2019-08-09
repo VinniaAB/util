@@ -76,9 +76,7 @@ class Validator
                     "The \"%s\" property must be less than or equal to {$params[0]}"
                 );
             },
-            'date_format' => function (string $key, string $rule, array $params) {
-                return new DateRule($params[0]);
-            },
+            'date_format' => new DateRule('The "%s" property must be a date of format "%s"'),
         ];
 
         $this->builtins['str'] = $this->builtins['string'];

@@ -13,29 +13,12 @@ use DateTimeImmutable;
 
 class DateRule extends Rule
 {
-
-    /**
-     * @var string
-     */
-    protected $format;
-
-    /**
-     * DateRule constructor.
-     * @param string $format
-     */
-    function __construct(string $format)
-    {
-        $this->format = $format;
-
-        parent::__construct("The \"%s\" property must be a date of format \"$format\"", 100, false, true);
-    }
-
     /**
      * @inheritDoc
      */
     protected function validateValue($value, array $params = []): bool
     {
-        return DateTimeImmutable::createFromFormat($this->format, $value) !== false;
+        return DateTimeImmutable::createFromFormat($params[0] ?? 'Y-m-d', $value) !== false;
     }
 
 }
