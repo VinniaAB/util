@@ -117,4 +117,24 @@ EOD;
             ],
         ], $arrayed);
     }
+
+    public function testToArrayWorksWithSimpleXML()
+    {
+        $xml = <<<EOD
+<root>
+    <name />
+    <name>Hello</name>
+</root>
+EOD;
+        $el = new \SimpleXMLElement($xml);
+
+        $arrayed = Xml::toArray($el);
+
+        $this->assertEquals([
+            'name' => [
+                '',
+                'Hello',
+            ],
+        ], $arrayed);
+    }
 }
