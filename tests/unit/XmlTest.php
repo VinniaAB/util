@@ -137,4 +137,25 @@ EOD;
             ],
         ], $arrayed);
     }
+
+    public function testToArrayWorksWhenSuppliedWithNonDocument()
+    {
+        $xml = <<<EOD
+<root>
+    <name />
+    <name>Hello</name>
+</root>
+EOD;
+
+        $el = new DOMDocument('1.0', 'utf-8');
+        $el->loadXML($xml);
+        $arrayed = Xml::toArray($el->firstChild);
+
+        $this->assertEquals([
+            'name' => [
+                '',
+                'Hello',
+            ],
+        ], $arrayed);
+    }
 }

@@ -100,12 +100,15 @@ class Xml
             );
         }
 
-        $out = [];
-
         // notice that we're reaching into the first child
         // of the DOMNode here. this means that the array
         // output will not include the root node.
-        $stack = new Stack([$xml->firstChild, &$out]);
+        if ($xml instanceof DOMDocument) {
+            $xml = $xml->documentElement;
+        }
+
+        $out = [];
+        $stack = new Stack([$xml, &$out]);
 
         while (!$stack->isEmpty()) {
             /**
