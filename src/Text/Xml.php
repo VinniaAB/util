@@ -6,6 +6,7 @@ namespace Vinnia\Util\Text;
 use DOMDocument;
 use DOMNode;
 use DOMText;
+use DOMElement;
 use SimpleXMLElement;
 use Vinnia\Util\Arrays;
 use Vinnia\Util\Stack;
@@ -123,35 +124,52 @@ class Xml
 
             foreach (($node->childNodes ?? []) as $node) {
                 $name = $node->nodeName;
-
-                // if the node is not a leaf node (eg. only
-                // contains text) we push it onto the stack
-                // for later processing. this will have the
-                // implicit effect that a node cannot contain
-                // both text and elements, but for most cases
-                // that's OK.
-                if (!static::isLeafNode($node)) {
-                    $chunk[$name] = $chunk[$name] ?? [];
-                    $stack->push([$node, &$chunk[$name]]);
-                    continue;
-                }
-
-                $value = $node->nodeValue;
+                $value = trim($node->nodeValue);
 
                 // skip empty text nodes.
-                if ($node instanceof DOMText && trim($value) === '') {
+                if ($node instanceof DOMText && $value === '') {
                     continue;
                 }
 
-                // if there are multiple instances of this
-                // node name we put the values into a numeric
-                // array. otherwise we just let the value be
-                // a string.
-                if (array_key_exists($name, $chunk)) {
-                    $chunk[$name] = (array) $chunk[$name];
-                    $chunk[$name][] = $value;
+                // if the node is a leaf node (eg. only
+                // contains text) we don't need to operate
+                // on its children and we can just save
+                // its value.
+                if (static::isLeafNode($node)) {
+                    // if there are multiple instances of this
+                    // node name we put the values into a numeric
+                    // array. otherwise we just let the value be
+                    // a string.
+                    if (array_key_exists($name, $chunk)) {
+                        $chunk[$name] = (array) $chunk[$name];
+                        $chunk[$name][] = $value;
+                    } else {
+                        $chunk[$name] = $value;
+                    }
+
+                    continue;
+                }
+
+                $chunk[$name] = $chunk[$name] ?? [];
+
+                $parentNode = $node->parentNode;
+
+                // a node is an "array node" if its parent contains
+                // several nodes of the same name. in the following
+                // example, "b" is an array node.
+                // <a>
+                //   <b />
+                //   <b />
+                // </a>
+                $isArrayNode =
+                    $parentNode instanceof DOMElement &&
+                    $parentNode->getElementsByTagName($name)->length > 1;
+
+                if ($isArrayNode) {
+                    $chunk[$name][] = [];
+                    $stack->push([$node, &$chunk[$name][count($chunk[$name]) - 1]]);
                 } else {
-                    $chunk[$name] = $value;
+                    $stack->push([$node, &$chunk[$name]]);
                 }
             }
         }

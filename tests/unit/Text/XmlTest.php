@@ -52,9 +52,20 @@ class XmlTest extends TestCase
         $this->assertEquals('<a>&lt;</a>', $xml);
     }
 
-    public function testToArray()
+    public function toArrayProvider()
     {
-        $xml = <<<EOD
+        return [
+            [
+                [
+                    'Two' => [1, 2, 3],
+                    'Three' => [
+                        'Hello' => [
+                            'World',
+                            'World Again',
+                        ],
+                    ],
+                ],
+                <<<XML
 <One>
     <Two>1</Two>
     <Two>2</Two>
@@ -64,20 +75,46 @@ class XmlTest extends TestCase
         <Hello>World Again</Hello>
     </Three>    
 </One>
-EOD;
+XML,
+            ],
+            [
+                [
+                    'Item' => [
+                        [
+                            'Price' => 1,
+                        ],
+                        [
+                            'Price' => 2,
+                        ],
+                    ],
+                ],
+                <<<XML
+<Root>
+  <Item>
+    <Price>1</Price>
+  </Item>
+  <Item>
+    <Price>2</Price>
+  </Item>
+</Root>
+XML,
+
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider toArrayProvider
+     * @param array $expected
+     * @param string $xml
+     */
+    public function testToArray(array $expected, string $xml)
+    {
         $el = new DOMDocument('1.0', 'utf-8');
         $el->loadXML($xml);
         $arrayed = Xml::toArray($el);
 
-        $this->assertEquals([
-            'Two' => [1, 2, 3],
-            'Three' => [
-                'Hello' => [
-                    'World',
-                    'World Again',
-                ],
-            ],
-        ], $arrayed);
+        $this->assertEquals($expected, $arrayed);
     }
 
     public function testToArraySerializesSingleEmptyElementToString()
