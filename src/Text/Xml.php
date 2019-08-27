@@ -96,7 +96,7 @@ class Xml
     public static function toArray($xml): array
     {
         if (extension_loaded('SimpleXML') && $xml instanceof SimpleXMLElement) {
-            $xml = (dom_import_simplexml($xml))->ownerDocument;
+            $xml = dom_import_simplexml($xml);
         } else if (!$xml instanceof DOMNode) {
             throw new \InvalidArgumentException(
                 '$xml must be an instance of either DOMNode or SimpleXMLElement'

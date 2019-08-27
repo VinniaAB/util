@@ -175,6 +175,26 @@ EOD;
         ], $arrayed);
     }
 
+    public function testToArrayWorksWithSimpleXMLAndDeepNode()
+    {
+        $xml = <<<EOD
+<root>
+  <a>
+    <b>
+      <c>Yee</c>
+    </b>
+  </a>
+</root>
+EOD;
+        $el = new \SimpleXMLElement($xml);
+
+        $arrayed = Xml::toArray($el->a->b);
+
+        $this->assertEquals([
+            'c' => 'Yee',
+        ], $arrayed);
+    }
+
     public function testToArrayWorksWhenSuppliedWithNonDocument()
     {
         $xml = <<<EOD
