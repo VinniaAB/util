@@ -19,7 +19,7 @@ class CollectionTest extends AbstractTest
      */
     public $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->collection = new Collection([0, 1, 2, 3, 4]);

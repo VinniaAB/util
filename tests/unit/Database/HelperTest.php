@@ -24,7 +24,7 @@ class HelperTest extends AbstractTest
      */
     public $helper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $dsn = 'sqlite::memory:';
