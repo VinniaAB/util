@@ -40,4 +40,12 @@ class SetTest extends TestCase
 
         $this->assertCount(1, $set);
     }
+
+    public function testConstructorUsesHashFunction()
+    {
+        $set = new Set(1, 2, 3);
+        $set->add(1);
+
+        $this->assertCount(3, $set);
+    }
 }
