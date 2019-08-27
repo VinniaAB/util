@@ -28,6 +28,23 @@ class Xml
     }
 
     /**
+     * @param DOMNode $node
+     * @param string $tag
+     * @return DOMNode[]
+     */
+    private static function getChildrenByTagName(DOMNode $node, string $tag): array
+    {
+        $out = [];
+        foreach (($node->childNodes ?? []) as $child) {
+            /* @var DOMNode $child */
+            if ($child->nodeName === $tag) {
+                $out[] = $child;
+            }
+        }
+        return $out;
+    }
+
+    /**
      * @param array $data
      * @return string
      */
@@ -163,7 +180,7 @@ class Xml
                 // </a>
                 $isArrayNode =
                     $parentNode instanceof DOMElement &&
-                    $parentNode->getElementsByTagName($name)->length > 1;
+                    count(static::getChildrenByTagName($parentNode, $name)) > 1;
 
                 if ($isArrayNode) {
                     $chunk[$name][] = [];

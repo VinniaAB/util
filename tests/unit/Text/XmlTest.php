@@ -215,4 +215,30 @@ EOD;
             ],
         ], $arrayed);
     }
+
+    public function testArrayLikeNodesAreNotConfusedBySiblingsOnOtherDepths()
+    {
+        $xml = <<<XML
+<root>
+  <a>
+    <b />
+  </a>
+  <c>
+    <a />
+  </c>
+</root>
+XML;
+        $el = new DOMDocument('1.0', 'utf-8');
+        $el->loadXML($xml);
+        $arrayed = Xml::toArray($el->firstChild);
+
+        $this->assertEquals([
+            'a' => [
+                'b' => '',
+            ],
+            'c' => [
+                'a' => '',
+            ],
+        ], $arrayed);
+    }
 }
