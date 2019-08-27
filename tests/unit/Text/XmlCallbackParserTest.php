@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace Tests\Unit;
 
-use Vinnia\Util\Text\XMLCallbackParser;
+use Vinnia\Util\Text\XmlCallbackParser;
 use Vinnia\Util\Tests\AbstractTest;
 use DOMElement;
 use RuntimeException;
 
-class XMLCallbackParserTest extends AbstractTest
+class XmlCallbackParserTest extends AbstractTest
 {
     const SOME_XML = <<<EOD
 <root>
@@ -23,7 +23,7 @@ EOD;
     public function testExecutesCallbacksForNode()
     {
         $called = 0;
-        $p = new XMLCallbackParser([
+        $p = new XmlCallbackParser([
             'child' => function () use (&$called) {
                 ++$called;
             },
@@ -37,7 +37,7 @@ EOD;
     {
         $a = 0;
         $b = 0;
-        $p = new XMLCallbackParser([
+        $p = new XmlCallbackParser([
             'root' => function () use (&$a) {
                 ++$a;
             },
@@ -54,8 +54,8 @@ EOD;
     public function testStopsParsingIfStopIsCalled()
     {
         $a = 0;
-        $p = new XMLCallbackParser([
-            'child' => function (DOMElement $element, XMLCallbackParser $parser) use (&$a) {
+        $p = new XmlCallbackParser([
+            'child' => function (DOMElement $element, XmlCallbackParser $parser) use (&$a) {
                 ++$a;
                 $parser->stop();
             },
@@ -67,8 +67,8 @@ EOD;
     public function testReturnsCorrectElementInCallback()
     {
         $a = 0;
-        $p = new XMLCallbackParser([
-            'child' => function (DOMElement $element, XMLCallbackParser $parser) use (&$a) {
+        $p = new XmlCallbackParser([
+            'child' => function (DOMElement $element, XmlCallbackParser $parser) use (&$a) {
                 $this->assertEquals('child', $element->nodeName);
                 ++$a;
             },
@@ -80,8 +80,8 @@ EOD;
     public function testParsedElementIncludesChildNodes()
     {
         $a = 0;
-        $p = new XMLCallbackParser([
-            'other_child' => function (DOMElement $element, XMLCallbackParser $parser) use (&$a) {
+        $p = new XmlCallbackParser([
+            'other_child' => function (DOMElement $element, XmlCallbackParser $parser) use (&$a) {
                 $this->assertEquals(1, $element->childNodes->length);
                 ++$a;
             },
@@ -93,8 +93,8 @@ EOD;
     public function testDoesNotExecuteCallbacksForMissingElements()
     {
         $a = 0;
-        $p = new XMLCallbackParser([
-            'YEE_MY_BOI' => function (DOMElement $element, XMLCallbackParser $parser) use (&$a) {
+        $p = new XmlCallbackParser([
+            'YEE_MY_BOI' => function (DOMElement $element, XmlCallbackParser $parser) use (&$a) {
                 ++$a;
             },
         ]);
@@ -105,7 +105,7 @@ EOD;
     public function testRemovesWhitespace()
     {
         $a = 0;
-        $p = new XMLCallbackParser([
+        $p = new XmlCallbackParser([
             'e' => function (DOMElement $element) use (&$a) {
                 $this->assertEquals('YEE', $element->textContent);
                 ++$a;
@@ -128,8 +128,8 @@ XML;
     public function testElementsContainsAttributes()
     {
         $a = 0;
-        $p = new XMLCallbackParser([
-            'child' => function (DOMElement $element, XMLCallbackParser $parser) use (&$a) {
+        $p = new XmlCallbackParser([
+            'child' => function (DOMElement $element, XmlCallbackParser $parser) use (&$a) {
                 $this->assertEquals('1', $element->getAttribute('a'));
                 $parser->stop();
                 ++$a;
@@ -143,7 +143,7 @@ XML;
     {
         $a = 0;
         $b = 0;
-        $p = new XMLCallbackParser([
+        $p = new XmlCallbackParser([
             'root' => function () use (&$a) {
                 ++$a;
             },
@@ -165,7 +165,7 @@ XML;
     {
         $this->expectException(RuntimeException::class);
 
-        $p = new XMLCallbackParser([]);
+        $p = new XmlCallbackParser([]);
         $p->parse(<<<XML
 <root>
 <yee

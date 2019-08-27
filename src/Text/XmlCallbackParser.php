@@ -14,7 +14,7 @@ use Vinnia\Util\Stack;
  * Class XMLCallbackParser
  * @package App\Reconciliation
  */
-class XMLCallbackParser
+class XmlCallbackParser
 {
     /**
      * @var callable[]
