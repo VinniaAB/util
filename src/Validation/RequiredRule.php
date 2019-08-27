@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Vinnia\Util\Validation;
 
 use RuntimeException;
-use Vinnia\Util\TemplateString;
+use Vinnia\Util\Text\TemplateString;
 
 /**
  * Class RequiredRule

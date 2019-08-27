@@ -1,6 +1,7 @@
 <?php
+declare(strict_types = 1);
 
-namespace Vinnia\Util;
+namespace Vinnia\Util\Text;
 
 class Template
 {

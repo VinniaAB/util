@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Vinnia\Util\Tests;
+namespace Vinnia\Util\Tests\Text;
 
-use Vinnia\Util\Xml;
+use Vinnia\Util\Text\Xml;
 use PHPUnit\Framework\TestCase;
 use DOMDocument;
 

@@ -7,7 +7,7 @@
  */
 declare(strict_types = 1);
 
-namespace Vinnia\Util;
+namespace Vinnia\Util\Text;
 
 /**
  * Render a parametrized template string. Example:

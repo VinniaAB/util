@@ -7,9 +7,9 @@
  */
 declare(strict_types = 1);
 
-namespace Vinnia\Util\Tests;
+namespace Vinnia\Util\Tests\Text;
 
-use Vinnia\Util\TemplateString;
+use Vinnia\Util\Text\TemplateString;
 use Vinnia\Util\Tests\AbstractTest;
 
 class TemplateStringTest extends AbstractTest

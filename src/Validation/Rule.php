@@ -11,7 +11,7 @@ namespace Vinnia\Util\Validation;
 
 
 use Vinnia\Util\Arrays;
-use Vinnia\Util\TemplateString;
+use Vinnia\Util\Text\TemplateString;
 
 abstract class Rule implements RuleInterface
 {

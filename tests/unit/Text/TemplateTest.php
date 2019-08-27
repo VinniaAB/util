@@ -5,18 +5,19 @@
  * Date: 2016-04-14
  * Time: 01:14
  */
+declare(strict_types = 1);
 
-namespace Vinnia\Util\Tests;
+namespace Vinnia\Util\Tests\Text;
 
-
-use Vinnia\Util\Template;
+use Vinnia\Util\Tests\AbstractTest;
+use Vinnia\Util\Text\Template;
 
 class TemplateTest extends AbstractTest
 {
 
     public function testRender()
     {
-        $t = new Template(__DIR__ . '/../_data/template.php');
+        $t = new Template(__DIR__ . '/../../_data/template.php');
         $str = $t->render(['message' => 'Hello World']);
         
         $this->assertEquals('<div>Hello World</div>', $str);
@@ -24,7 +25,7 @@ class TemplateTest extends AbstractTest
 
     public function testRenderNested()
     {
-        $t = new Template(__DIR__ . '/../_data/nested-template.php');
+        $t = new Template(__DIR__ . '/../../_data/nested-template.php');
         $str = $t->render(['message' => 'Hello World']);
 
         $this->assertEquals('<div>Hello World</div>', $str);

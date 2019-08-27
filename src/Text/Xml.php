@@ -1,12 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace Vinnia\Util;
+namespace Vinnia\Util\Text;
 
 use DOMDocument;
 use DOMNode;
 use DOMText;
 use SimpleXMLElement;
+use Vinnia\Util\Arrays;
+use Vinnia\Util\Stack;
 
 class Xml
 {
