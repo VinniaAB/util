@@ -57,8 +57,8 @@ class Xml
     public static function fromArray(array $data): string
     {
         $doc = new DOMDocument('1.0', 'utf-8');
-        $doc->preserveWhiteSpace = false;
-        $doc->formatOutput = false;
+        $doc->preserveWhiteSpace = true;
+        $doc->formatOutput = true;
 
         $stack = new Stack([$doc, $data]);
 
@@ -107,7 +107,6 @@ class Xml
         // between tags.
         $xml = $doc->saveXML();
         $xml = mb_substr($xml, 38, null, 'utf-8');
-        $xml = preg_replace('/>\s+</', '><', $xml);
 
         return trim($xml);
     }

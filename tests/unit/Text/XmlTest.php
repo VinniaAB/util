@@ -21,13 +21,13 @@ class XmlTest extends TestCase
                     'b' => 'c',
                     'd' => 'e',
                 ],
-            ], '<a><b>c</b><d>e</d></a>'],
+            ], "<a>\n  <b>c</b>\n  <d>e</d>\n</a>"],
             [[
                 'a' => [
                     'one',
                     'two',
                 ],
-            ], '<a>one</a><a>two</a>'],
+            ], "<a>one</a>\n<a>two</a>"],
         ];
     }
 
