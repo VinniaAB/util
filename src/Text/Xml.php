@@ -29,19 +29,25 @@ class Xml
 
     /**
      * @param DOMNode $node
-     * @param string $tag
-     * @return DOMNode[]
+     * @return bool
      */
-    private static function getChildrenByTagName(DOMNode $node, string $tag): array
+    private static function isArrayNode(DOMNode $node): bool
     {
-        $out = [];
-        foreach (($node->childNodes ?? []) as $child) {
-            /* @var DOMNode $child */
-            if ($child->nodeName === $tag) {
-                $out[] = $child;
+        $parent = $node->parentNode;
+        if (!$parent instanceof DOMElement) {
+            return false;
+        }
+        foreach (($parent->childNodes ?? []) as $sibling) {
+            /* @var DOMNode $sibling */
+
+            // if we find a sibling node with the same name
+            // but a different identity we can be sure that
+            // this is an array node.
+            if ($sibling->nodeName === $node->nodeName && $sibling !== $node) {
+                return true;
             }
         }
-        return $out;
+        return false;
     }
 
     /**
@@ -169,8 +175,6 @@ class Xml
 
                 $chunk[$name] = $chunk[$name] ?? [];
 
-                $parentNode = $node->parentNode;
-
                 // a node is an "array node" if its parent contains
                 // several nodes of the same name. in the following
                 // example, "b" is an array node.
@@ -178,9 +182,7 @@ class Xml
                 //   <b />
                 //   <b />
                 // </a>
-                $isArrayNode =
-                    $parentNode instanceof DOMElement &&
-                    count(static::getChildrenByTagName($parentNode, $name)) > 1;
+                $isArrayNode = static::isArrayNode($node);
 
                 if ($isArrayNode) {
                     $chunk[$name][] = [];
