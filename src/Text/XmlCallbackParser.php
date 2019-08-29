@@ -152,7 +152,7 @@ class XmlCallbackParser
      */
     public function parse($data): void
     {
-        $data = $this->normalizeData($data);
+        $handle = $this->normalizeData($data);
         $this->continue = true;
         $this->stack = new Stack();
 
@@ -163,7 +163,7 @@ class XmlCallbackParser
         xml_set_character_data_handler($parser, [$this, 'onCharacters']);
 
         try {
-            while ($chunk = fread($data, $this->bufferSize)) {
+            while ($chunk = fread($handle, $this->bufferSize)) {
                 $result = xml_parse($parser, $chunk);
 
                 if ($result === 0) {
@@ -181,7 +181,12 @@ class XmlCallbackParser
         } finally {
             xml_parse($parser, '', true);
             xml_parser_free($parser);
-            fclose($data);
+
+            // if the $data was originally a string it means
+            // we have created a temporary resource. close it.
+            if (is_string($data)) {
+                fclose($handle);
+            }
         }
     }
 

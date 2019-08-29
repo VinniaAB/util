@@ -157,6 +157,8 @@ XML;
 
         $p->parse($handle);
 
+        fclose($handle);
+
         $this->assertEquals(1, $a);
         $this->assertEquals(2, $b);
     }
