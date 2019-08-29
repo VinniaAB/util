@@ -9,10 +9,30 @@ use RuntimeException;
 use Vinnia\Util\Stack;
 
 /**
- * A memory-efficient XML parser that executes a callback function for interesting nodes.
- *
  * Class XMLCallbackParser
- * @package App\Reconciliation
+ * @package Vinnia\Util\Text
+ *
+ * A memory-efficient XML parser that executes a callback function for interesting nodes.
+ * Usage:
+ *
+ * $parser = new XmlCallbackParser([
+ *   'a' => function (DOMNode $node) {
+ *     echo $node->textContent . PHP_EOL;
+ *   },
+ *   'b' => function (DOMNode $node) {
+ *     echo $node->textContent . PHP_EOL;
+ *   },
+ * ])
+ *
+ * $xml = <<<XML
+ * <root>
+ *   <a>Yee</a>
+ *   <b>Boi</b>
+ * </root>
+ * XML;
+ *
+ * $parser->parse($xml);
+ *
  */
 class XmlCallbackParser
 {
