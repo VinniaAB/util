@@ -83,7 +83,7 @@ class Validator
             foreach ($exploded as $item) {
 
                 // params are separated by ":"
-                $parts = explode(':', $item);
+                $parts = preg_split('/(?<!\\\\):/', $item);
                 $ruleName = $parts[0];
                 $params = array_slice($parts, 1);
 

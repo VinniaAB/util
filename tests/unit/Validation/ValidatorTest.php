@@ -211,4 +211,19 @@ class ValidatorTest extends AbstractTest
         $keys = array_keys($bag->getErrors());
         $this->assertEquals(['0.a', '1.a'], $keys);
     }
+
+    public function testRecognizesEscapeCharacterInRuleParameters()
+    {
+        $v = new Validator([
+            'a' => 'date_format:Y-m-d\\TH\\:i\\:sP'
+        ]);
+
+        $this->assertCount(1, $v->validate([
+            'a' => '2019-01-01',
+        ]));
+
+        $this->assertCount(0, $v->validate([
+            'a' => '2019-01-01T15:00:00+02:00',
+        ]));
+    }
 }
