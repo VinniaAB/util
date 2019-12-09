@@ -9,18 +9,19 @@ use RuntimeException;
 use Vinnia\Util\Stack;
 
 /**
- * Class XmlNodeIterator
+ * Class XmlIteratorBuilder
  * @package Vinnia\Util\Text
  *
  * A memory-efficient XML parser that iterates over specific nodes.
  * Usage:
  *
- * $iter = new XmlNodeIterator(['a', 'b']);
+ * $iter = new XmlIteratorBuilder(['a', 'b']);
  *
  * $xml = <<<XML
  * <root>
  *   <a>Yee</a>
  *   <b>Boi</b>
+ *   <c>Hello</c>
  * </root>
  * XML;
  *
@@ -29,7 +30,7 @@ use Vinnia\Util\Stack;
  * }
  *
  */
-class XmlNodeIterator
+class XmlIteratorBuilder
 {
     /**
      * @var string[]

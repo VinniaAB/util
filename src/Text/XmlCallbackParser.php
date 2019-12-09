@@ -28,6 +28,7 @@ use Vinnia\Util\Stack;
  * <root>
  *   <a>Yee</a>
  *   <b>Boi</b>
+ *   <c>Hello</c>
  * </root>
  * XML;
  *
@@ -42,7 +43,7 @@ class XmlCallbackParser
     protected $callbacks;
 
     /**
-     * @var XmlNodeIterator
+     * @var XmlIteratorBuilder
      */
     protected $iterator;
 
@@ -54,7 +55,7 @@ class XmlCallbackParser
     function __construct(array $callbacks, int $bufferSize = 8192)
     {
         $this->callbacks = $callbacks;
-        $this->iterator = new XmlNodeIterator(array_keys($callbacks), $bufferSize);
+        $this->iterator = new XmlIteratorBuilder(array_keys($callbacks), $bufferSize);
     }
 
     /**

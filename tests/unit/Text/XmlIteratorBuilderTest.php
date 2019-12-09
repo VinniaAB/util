@@ -5,9 +5,9 @@ namespace Vinnia\Util\Tests\Text;
 
 
 use PHPUnit\Framework\TestCase;
-use Vinnia\Util\Text\XmlNodeIterator;
+use Vinnia\Util\Text\XmlIteratorBuilder;
 
-class XmlNodeIteratorTest extends TestCase
+class XmlIteratorBuilderTest extends TestCase
 {
     const SOME_XML = <<<EOD
 <root>
@@ -21,7 +21,7 @@ EOD;
 
     public function testIteratesOverSpecifiedNodes()
     {
-        $iter = new XmlNodeIterator(['child']);
+        $iter = new XmlIteratorBuilder(['child']);
 
         foreach ($iter->iterate(static::SOME_XML) as $node) {
             $this->assertEquals('child', $node->nodeName);
@@ -30,7 +30,7 @@ EOD;
 
     public function testStopsIterating()
     {
-        $iter = new XmlNodeIterator(['child']);
+        $iter = new XmlIteratorBuilder(['child']);
         $i = 0;
 
         foreach ($iter->iterate(static::SOME_XML) as $node) {
