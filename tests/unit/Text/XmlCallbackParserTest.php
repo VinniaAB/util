@@ -82,12 +82,12 @@ EOD;
         $a = 0;
         $p = new XmlCallbackParser([
             'other_child' => function (DOMElement $element, XmlCallbackParser $parser) use (&$a) {
-                $this->assertEquals(1, $element->childNodes->length);
-                ++$a;
+                $a = $element->getElementsByTagName('yee')->length;
             },
         ]);
         $p->parse(static::SOME_XML);
-        $this->assertGreaterThan(0, $a);
+
+        $this->assertEquals(1, $a);
     }
 
     public function testDoesNotExecuteCallbacksForMissingElements()

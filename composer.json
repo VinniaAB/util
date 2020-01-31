@@ -26,9 +26,10 @@
         "php": ">=7.2.0",
         "ext-dom": "*",
         "ext-json": "*",
+        "ext-libxml": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
-        "ext-xml": "*"
+        "ext-xmlreader": "*"
     },
     "require-dev": {
         "phpunit/phpunit": ">=8.0"
