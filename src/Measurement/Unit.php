@@ -10,38 +10,38 @@ abstract class Unit implements JsonSerializable
     const KIND_LENGTH = 'length';
     const KIND_MASS = 'mass';
 
-    const MILLIMETER = 'mm';
-    const CENTIMETER = 'cm';
-    const METER = 'm';
-    const KILOMETER = 'km';
+    const SYMBOL_MILLIMETER = 'mm';
+    const SYMBOL_CENTIMETER = 'cm';
+    const SYMBOL_METER = 'm';
+    const SYMBOL_KILOMETER = 'km';
 
-    const INCH = 'in';
-    const FOOT = 'ft';
-    const YARD = 'yd';
-    const MILE = 'mi';
+    const SYMBOL_INCH = 'in';
+    const SYMBOL_FOOT = 'ft';
+    const SYMBOL_YARD = 'yd';
+    const SYMBOL_MILE = 'mi';
 
-    const GRAM = 'g';
-    const KILOGRAM = 'kg';
-    const METRIC_TON = 't';
+    const SYMBOL_GRAM = 'g';
+    const SYMBOL_KILOGRAM = 'kg';
+    const SYMBOL_METRIC_TON = 't';
 
-    const POUND = 'lb';
-    const STONE = 'st';
-    const OUNCE = 'oz';
+    const SYMBOL_POUND = 'lb';
+    const SYMBOL_STONE = 'st';
+    const SYMBOL_OUNCE = 'oz';
 
     const UNIT_DEFINITIONS = [
-        Gram::class => [self::GRAM, 1.0, self::KIND_MASS],
-        Kilogram::class => [self::KILOGRAM, 1000.0, self::KIND_MASS],
-        Pound::class => [self::POUND, 453.59237, self::KIND_MASS],
+        Gram::class => [self::SYMBOL_GRAM, 1.0, self::KIND_MASS],
+        Kilogram::class => [self::SYMBOL_KILOGRAM, 1000.0, self::KIND_MASS],
+        Pound::class => [self::SYMBOL_POUND, 453.59237, self::KIND_MASS],
 
-        Millimeter::class => [self::MILLIMETER, 0.001, self::KIND_LENGTH],
-        Centimeter::class => [self::CENTIMETER, 0.01, self::KIND_LENGTH],
-        Meter::class => [self::METER, 1.0, self::KIND_LENGTH],
-        Kilometer::class => [self::KILOMETER, 1000.0, self::KIND_LENGTH],
+        Millimeter::class => [self::SYMBOL_MILLIMETER, 0.001, self::KIND_LENGTH],
+        Centimeter::class => [self::SYMBOL_CENTIMETER, 0.01, self::KIND_LENGTH],
+        Meter::class => [self::SYMBOL_METER, 1.0, self::KIND_LENGTH],
+        Kilometer::class => [self::SYMBOL_KILOMETER, 1000.0, self::KIND_LENGTH],
 
-        Inch::class => [self::INCH, 0.0254, self::KIND_LENGTH],
-        Foot::class => [self::FOOT, 0.3048, self::KIND_LENGTH],
-        Yard::class => [self::YARD, 0.9144, self::KIND_LENGTH],
-        Mile::class => [self::MILE, 1609.344, self::KIND_LENGTH],
+        Inch::class => [self::SYMBOL_INCH, 0.0254, self::KIND_LENGTH],
+        Foot::class => [self::SYMBOL_FOOT, 0.3048, self::KIND_LENGTH],
+        Yard::class => [self::SYMBOL_YARD, 0.9144, self::KIND_LENGTH],
+        Mile::class => [self::SYMBOL_MILE, 1609.344, self::KIND_LENGTH],
     ];
 
     protected string $symbol;
