@@ -3,90 +3,62 @@
 namespace Vinnia\Util\Measurement;
 
 use JsonSerializable;
+use LogicException;
 
-class Amount implements JsonSerializable
+final class Amount implements JsonSerializable
 {
-    /**
-     * @var float
-     */
-    private $value;
+    private float $value;
+    private Unit $unit;
 
-    /**
-     * @var string
-     */
-    private $unit;
-
-    /**
-     * Distance constructor.
-     * @param float $value
-     * @param string $unit
-     */
-    function __construct(float $value, string $unit)
+    function __construct(float $value, Unit $unit)
     {
         $this->value = $value;
         $this->unit = $unit;
     }
 
-    /**
-     * @return float
-     */
     public function getValue(): float
     {
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnit(): string
+    public function getUnit(): Unit
     {
         return $this->unit;
     }
 
-    /**
-     * @param string $unit
-     * @return Amount
-     */
-    public function convertTo(string $unit): self
+    public function convertTo(Unit $unit): self
     {
-        $converter = new UnitConverter($this->unit, $unit);
-        return new Amount($converter->convert($this->value), $unit);
+        if ($this->unit->getKind() !== $unit->getKind()) {
+            throw new LogicException(
+                sprintf('Cannot convert unit \'%s\' into \'%s\'.', $this->unit, $unit)
+            );
+        }
+
+        $normalized = $this->value * $this->unit->getSIConversionFactor();
+        $next = $normalized / $unit->getSIConversionFactor();
+
+        return new Amount($next, $unit);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->value;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         return [
             'value' => $this->getValue(),
-            'unit' => $this->getUnit(),
+            'unit' => $this->getUnit()->getSymbol(),
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
 
-    /**
-     * @param int $decimals
-     * @param string $decimalSeparator
-     * @param string $thousandsSeparator
-     * @return string
-     */
-    public function format(int $decimals, string $decimalSeparator = '.', string $thousandsSeparator = '')
+    public function format(int $decimals, string $decimalSeparator = '.', string $thousandsSeparator = ''): string
     {
         return number_format($this->value, $decimals, $decimalSeparator, $thousandsSeparator);
     }

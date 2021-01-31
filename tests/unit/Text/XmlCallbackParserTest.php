@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit;
+namespace Vinnia\Util\Tests\Text;
 
 use Vinnia\Util\Text\XmlCallbackParser;
 use Vinnia\Util\Tests\AbstractTest;
