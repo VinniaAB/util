@@ -102,29 +102,6 @@ EOD;
         $this->assertEquals(0, $a);
     }
 
-    public function testRemovesWhitespace()
-    {
-        $a = 0;
-        $p = new XmlCallbackParser([
-            'e' => function (DOMElement $element) use (&$a) {
-                $this->assertEquals('YEE', $element->textContent);
-                ++$a;
-            },
-        ]);
-
-        $xml = <<<XML
-<root>
-    <e>  YEE
-    
-    
-    
-    </e>
-</root>
-XML;
-        $p->parse($xml);
-        $this->assertEquals(1, $a);
-    }
-
     public function testElementsContainsAttributes()
     {
         $a = 0;
