@@ -64,4 +64,22 @@ class AmountTest extends AbstractTest
         $amount = new Amount(1.0, Gram::unit());
         $amount->convertTo(Meter::unit());
     }
+
+    public function testAddAmountsOfSameUnit()
+    {
+        $a = new Amount(1.0, Gram::unit());
+        $b = new Amount(2.0, Gram::unit());
+
+        $this->assertSame(3.0, $a->add($b)->getValue());
+    }
+
+    public function testAddThrowsOnIncompatibleUnits()
+    {
+        $this->expectException(LogicException::class);
+
+        $a = new Amount(1.0, Gram::unit());
+        $b = new Amount(2.0, Kilometer::unit());
+
+        $a->add($b);
+    }
 }

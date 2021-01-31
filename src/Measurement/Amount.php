@@ -26,6 +26,17 @@ final class Amount implements JsonSerializable
         return $this->unit;
     }
 
+    public function add(Amount $other): self
+    {
+        if ($this->unit !== $other->unit) {
+            throw new LogicException(
+                sprintf('Cannot add amounts of units \'%s\' and \'%s\'.', $this->unit, $other->unit)
+            );
+        }
+
+        return new Amount($this->value + $other->value, $this->unit);
+    }
+
     public function convertTo(Unit $unit): self
     {
         if ($this->unit->getKind() !== $unit->getKind()) {
