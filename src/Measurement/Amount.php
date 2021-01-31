@@ -37,6 +37,11 @@ final class Amount implements JsonSerializable
         return new Amount($this->value + $other->value, $this->unit);
     }
 
+    public function multiply(float $factor): self
+    {
+        return new Amount($this->value * $factor, $this->unit);
+    }
+
     public function convertTo(Unit $unit): self
     {
         if ($this->unit->getKind() !== $unit->getKind()) {
