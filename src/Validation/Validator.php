@@ -1,17 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 15:01
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
 class Validator
 {
-
     /**
      * @var RuleInterface[]
      */
@@ -138,5 +130,4 @@ class Validator
 
         return $bag;
     }
-
 }

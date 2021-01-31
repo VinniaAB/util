@@ -1,21 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 15:23
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use Vinnia\Util\Tests\AbstractTest;
 use Vinnia\Util\Validation\Validator;
 
 class ValidatorTest extends AbstractTest
 {
-
     public function testWorksWithStringRules()
     {
         $validator = new Validator([
@@ -24,7 +15,7 @@ class ValidatorTest extends AbstractTest
 
         $errors = $validator->validate([
             'prop' => [
-                []
+                [],
             ],
         ]);
 
@@ -126,11 +117,11 @@ class ValidatorTest extends AbstractTest
             'prop' => 'in:1:2:3',
         ]);
         $bag = $validator->validate([
-            'prop' => 4
+            'prop' => 4,
         ]);
         $this->assertCount(1, $bag);
         $bag = $validator->validate([
-            'prop' => 3
+            'prop' => 3,
         ]);
         $this->assertCount(0, $bag);
     }
@@ -215,7 +206,7 @@ class ValidatorTest extends AbstractTest
     public function testRecognizesEscapeCharacterInRuleParameters()
     {
         $v = new Validator([
-            'a' => 'date_format:Y-m-d\\TH\\:i\\:sP'
+            'a' => 'date_format:Y-m-d\\TH\\:i\\:sP',
         ]);
 
         $this->assertCount(1, $v->validate([

@@ -1,19 +1,11 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2016-04-14
- * Time: 00:59
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Tests;
-
 
 use Vinnia\Util\Collection;
 
 class CollectionTest extends AbstractTest
 {
-
     /**
      * @var Collection
      */
@@ -27,37 +19,51 @@ class CollectionTest extends AbstractTest
 
     public function testFilter()
     {
-        $c = $this->collection->filter(function($i) { return $i % 2 === 0; });
+        $c = $this->collection->filter(function ($i) {
+            return $i % 2 === 0;
+        });
         $this->assertEquals([0, 2, 4], $c->value());
     }
 
     public function testMap()
     {
-        $c = $this->collection->map(function($i) { return $i * 2; });
+        $c = $this->collection->map(function ($i) {
+            return $i * 2;
+        });
         $this->assertEquals([0, 2, 4, 6, 8], $c->value());
     }
 
     public function testSome()
     {
-        $result = $this->collection->some(function($i) { return $i === 0; });
+        $result = $this->collection->some(function ($i) {
+            return $i === 0;
+        });
         $this->assertEquals(true, $result);
 
-        $result = $this->collection->some(function($i) { return $i > 4; });
+        $result = $this->collection->some(function ($i) {
+            return $i > 4;
+        });
         $this->assertEquals(false, $result);
     }
 
     public function testEvery()
     {
-        $result = $this->collection->every(function($i) { return $i === 0; });
+        $result = $this->collection->every(function ($i) {
+            return $i === 0;
+        });
         $this->assertEquals(false, $result);
 
-        $result = $this->collection->every(function($i) { return $i >= 0; });
+        $result = $this->collection->every(function ($i) {
+            return $i >= 0;
+        });
         $this->assertEquals(true, $result);
     }
 
     public function testReduce()
     {
-        $result = $this->collection->reduce(function($carry, $current) { return $carry + $current; }, 0);
+        $result = $this->collection->reduce(function ($carry, $current) {
+            return $carry + $current;
+        }, 0);
         $this->assertEquals(10, $result);
     }
 
@@ -76,7 +82,9 @@ class CollectionTest extends AbstractTest
     public function testFlatMap()
     {
         $c = new Collection([[0, 1], [2, 3]]);
-        $result = $c->flatMap(function ($value) { return $value * 2; })->value();
+        $result = $c->flatMap(function ($value) {
+            return $value * 2;
+        })->value();
         $this->assertEquals([0, 2, 4, 6], $result);
     }
 
@@ -147,35 +155,45 @@ class CollectionTest extends AbstractTest
     public function testFind()
     {
         $a = new Collection([1, 2, 3]);
-        $value = $a->find(function ($b) { return $b === 1; });
+        $value = $a->find(function ($b) {
+            return $b === 1;
+        });
         $this->assertEquals(1, $value);
     }
 
     public function testFindWithNonExistentValue()
     {
         $a = new Collection([1, 2, 3]);
-        $value = $a->find(function ($b) { return $b === 4; });
+        $value = $a->find(function ($b) {
+            return $b === 4;
+        });
         $this->assertNull($value);
     }
 
     public function testMin()
     {
         $values = new Collection([10, 3, 2, 6]);
-        $min = $values->min(function (int $value) { return $value; });
+        $min = $values->min(function (int $value) {
+            return $value;
+        });
         $this->assertEquals(2, $min);
     }
 
     public function testMax()
     {
         $values = new Collection([10, 3, 2, 6]);
-        $max = $values->max(function (int $value) { return $value; });
+        $max = $values->max(function (int $value) {
+            return $value;
+        });
         $this->assertEquals(10, $max);
     }
 
     public function testAverage()
     {
         $values = new Collection([10, 3, 2, 6]);
-        $avg = $values->average(function (int $value) { return $value; });
+        $avg = $values->average(function (int $value) {
+            return $value;
+        });
         $this->assertEquals(5.25, $avg);
     }
 
@@ -191,5 +209,4 @@ class CollectionTest extends AbstractTest
         $values = new Collection([1, 2, 3]);
         $this->assertEquals(3, $values->count());
     }
-    
 }

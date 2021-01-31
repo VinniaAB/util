@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 16:01
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
 
@@ -16,7 +9,6 @@ use Vinnia\Util\Validation\Validator;
 
 class RequiredRuleTest extends AbstractRuleTest
 {
-
     public function ruleResultProvider(): array
     {
         return [
@@ -54,10 +46,10 @@ class RequiredRuleTest extends AbstractRuleTest
                 [['a' => 1], ['a' => 2], []], '*.a', null, 1,
             ],
             [
-                [], '*', null, 1
+                [], '*', null, 1,
             ],
             [
-                [], '*.a', null, 0
+                [], '*.a', null, 0,
             ],
         ];
     }

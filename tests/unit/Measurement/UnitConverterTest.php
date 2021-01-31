@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-03-01
- * Time: 21:43
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Tests;
 
@@ -15,7 +8,6 @@ use Vinnia\Util\Tests\AbstractTest;
 
 class UnitConverterTest extends AbstractTest
 {
-
     public function convertUnitsProvider()
     {
         return [
@@ -61,5 +53,4 @@ class UnitConverterTest extends AbstractTest
         $this->expectException(\LogicException::class);
         new UnitConverter('m', 'lb');
     }
-
 }

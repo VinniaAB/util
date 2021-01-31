@@ -1,16 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 15-10-15
- * Time: 11:25
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Database;
 
 interface DatabaseInterface
 {
-
     /**
      * Execute a non-query statement
      * @param string $sql
@@ -34,5 +27,4 @@ interface DatabaseInterface
      * @return string[]
      */
     public function query(string $sql, array $params = []);
-
 }

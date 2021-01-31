@@ -1,18 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-06-22
- * Time: 14:06
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util;
 
-
 class Arrays
 {
-
     /**
      * Get an array element with dot notation.
      * @param array $source
@@ -65,8 +56,7 @@ class Arrays
             foreach ($data as $key => $value) {
                 if (is_array($value) && !empty($value)) {
                     $flattener($out, "$prefix$key", $value);
-                }
-                else {
+                } else {
                     $out["$prefix$key"] = $value;
                 }
             }
@@ -111,5 +101,4 @@ class Arrays
         }
         return true;
     }
-
 }

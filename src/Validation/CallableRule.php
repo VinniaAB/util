@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 21:01
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
@@ -13,7 +6,6 @@ use ReflectionFunction;
 
 class CallableRule extends Rule
 {
-
     /**
      * @var callable
      */
@@ -38,8 +30,7 @@ class CallableRule extends Rule
         int $priority = 100,
         bool $breaksRuleChainOnSuccess = false,
         bool $yieldsErrors = true
-    )
-    {
+    ) {
         $this->callable = $callable;
         $this->numberOfParameters = (new ReflectionFunction($callable))->getNumberOfParameters();
 
@@ -57,5 +48,4 @@ class CallableRule extends Rule
 
         return call_user_func($this->callable, $value, $params);
     }
-
 }

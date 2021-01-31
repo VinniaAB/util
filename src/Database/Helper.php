@@ -1,17 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 15-10-27
- * Time: 12:14
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Database;
 
-
 class Helper
 {
-
     /**
      * @var DatabaseInterface
      */
@@ -67,7 +59,9 @@ class Helper
     public function insert(string $table, array $values): bool
     {
         $cols = array_keys($values);
-        $cols = array_map(function($col) { return $this->quoter->quoteColumn($col); }, $cols);
+        $cols = array_map(function ($col) {
+            return $this->quoter->quoteColumn($col);
+        }, $cols);
         $colString = implode(',', $cols);
 
         $params = [];
@@ -203,5 +197,4 @@ class Helper
 
         return $this->insert($table, $values);
     }
-
 }

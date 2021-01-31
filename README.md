@@ -1,3 +1,5 @@
+![Build status](https://github.com/VinniaAB/util/workflows/build/badge.svg)
+
 # Vinnia utilities
 A mixed bag of php utilities.
 

@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 15:07
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
@@ -13,7 +6,6 @@ use Countable;
 
 class ErrorBag implements Countable
 {
-
     /**
      * @var string[][]
      */
@@ -73,5 +65,4 @@ class ErrorBag implements Countable
     {
         return count($this->errors);
     }
-
 }

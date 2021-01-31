@@ -1,14 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 20:51
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use Vinnia\Util\Tests\AbstractTest;
 use Vinnia\Util\Validation\DataSet;
@@ -16,7 +8,6 @@ use Vinnia\Util\Validation\Rule;
 
 class RuleTest extends AbstractTest
 {
-
     /**
      * @var Rule
      */
@@ -77,5 +68,4 @@ class RuleTest extends AbstractTest
         $props = $data->getMatchingKeys('my.*.prop');
         $this->assertEquals(['my.first.prop', 'my.second.prop', 'my.third.prop'], $props);
     }
-
 }

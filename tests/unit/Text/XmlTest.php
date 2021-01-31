@@ -9,7 +9,6 @@ use DOMDocument;
 
 class XmlTest extends TestCase
 {
-
     public function xmlProvider()
     {
         return [
@@ -99,7 +98,7 @@ XML,
 </Root>
 XML,
 
-            ]
+            ],
         ];
     }
 

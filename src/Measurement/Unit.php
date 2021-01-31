@@ -1,14 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-03-04
- * Time: 17:51
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Measurement;
-
 
 class Unit
 {

@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-03-01
- * Time: 18:32
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Measurement;
 
@@ -13,7 +6,6 @@ use LogicException;
 
 class UnitConverter
 {
-
     const CONVERSION_TABLES = [
         'length_to_meters' => [
             Unit::MILLIMETER => 0.001,
@@ -96,5 +88,4 @@ class UnitConverter
 
         return $normalized / $this->factors[$this->to];
     }
-
 }

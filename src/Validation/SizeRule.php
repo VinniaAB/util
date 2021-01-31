@@ -1,18 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2018-08-06
- * Time: 14:29
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
-/**
- * Class SizeRule
- * @package Vinnia\Util\Validation
- */
 class SizeRule extends Rule
 {
     const COMPARE_LESS_THAN = 'lt';

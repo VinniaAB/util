@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2019-02-02
- * Time: 03:04
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
@@ -20,5 +13,4 @@ class DateRule extends Rule
     {
         return DateTimeImmutable::createFromFormat($params[0] ?? 'Y-m-d', $value) !== false;
     }
-
 }

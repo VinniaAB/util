@@ -1,21 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 15:44
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
-
 
 use Vinnia\Util\Arrays;
 use Vinnia\Util\Text\TemplateString;
 
 abstract class Rule implements RuleInterface
 {
-
     /**
      * @var string
      */
@@ -48,8 +39,7 @@ abstract class Rule implements RuleInterface
         int $priority = 100,
         bool $breaksRuleChainOnSuccess = false,
         bool $yieldsErrors = true
-    )
-    {
+    ) {
         $this->errorMessage = $errorMessage;
         $this->priority = $priority;
         $this->breaksRuleChainOnSuccess = $breaksRuleChainOnSuccess;
@@ -120,5 +110,4 @@ abstract class Rule implements RuleInterface
 
         return $errors;
     }
-
 }

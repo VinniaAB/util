@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2018-03-16
- * Time: 14:32
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Text;
 
@@ -19,7 +12,6 @@ namespace Vinnia\Util\Text;
  */
 class TemplateString
 {
-
     /**
      * @var string
      */
@@ -59,5 +51,4 @@ class TemplateString
             return array_key_exists($name, $data) ? (string) $data[$name] : $matches[0];
         }, $this->template);
     }
-
 }

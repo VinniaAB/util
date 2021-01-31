@@ -1,20 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 21:08
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use Vinnia\Util\Validation\CallableRule;
 use Vinnia\Util\Validation\RuleInterface;
 
 class CallableRuleTest extends AbstractRuleTest
 {
-
     /**
      * @return RuleInterface
      */
@@ -34,5 +26,4 @@ class CallableRuleTest extends AbstractRuleTest
             [['prop' => 'one'], 'prop', 'prop', 1],
         ];
     }
-
 }

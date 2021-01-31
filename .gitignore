@@ -25,3 +25,4 @@ composer.phar
 .env
 .env-test
 .phpunit*
+.php_cs.cache

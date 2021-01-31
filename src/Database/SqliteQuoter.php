@@ -1,17 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2016-04-14
- * Time: 00:46
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Database;
 
-
 class SqliteQuoter implements QuoterInterface
 {
-
     /**
      * @param string $name
      * @return mixed
@@ -29,5 +21,4 @@ class SqliteQuoter implements QuoterInterface
     {
         return "\"$name\"";
     }
-
 }

@@ -1,19 +1,11 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-06-22
- * Time: 14:10
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Tests;
-
 
 use Vinnia\Util\Arrays;
 
 class ArraysTest extends AbstractTest
 {
-
     public function testGetWithNumericKeys()
     {
         $source = [
@@ -117,5 +109,4 @@ class ArraysTest extends AbstractTest
     {
         $this->assertEquals(15, Arrays::get([], 'yee', 15));
     }
-
 }

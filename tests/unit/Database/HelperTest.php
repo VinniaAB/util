@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 15-10-27
- * Time: 13:12
- */
+<?php declare(strict_types=1);
 namespace Vinnia\Util\Tests\Database;
 
 use Vinnia\Util\Database\PDODatabase;

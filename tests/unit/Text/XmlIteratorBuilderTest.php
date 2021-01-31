@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Text;
 
-
 use PHPUnit\Framework\TestCase;
 use Vinnia\Util\Text\XmlIteratorBuilder;
 

@@ -1,14 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2018-07-28
- * Time: 23:40
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use Vinnia\Util\Tests\AbstractTest;
 use Vinnia\Util\Validation\DataSet;
@@ -25,7 +17,7 @@ class DataSetTest extends AbstractTest
                 ['a' => 1], 'a', ['' => ['a' => 1]],
             ],
             [
-                [[1], [2], [3]], '*.0', ['0' =>[1], '1' => [2], '2' => [3]]
+                [[1], [2], [3]], '*.0', ['0' => [1], '1' => [2], '2' => [3]],
             ],
             [
                 ['a' => [1, 2, 3]], 'a.*', ['a' => [1, 2, 3]],

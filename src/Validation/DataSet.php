@@ -1,13 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 22:13
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Validation;
-
 
 use Vinnia\Util\Arrays;
 use Vinnia\Util\Collection;

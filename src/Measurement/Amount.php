@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-03-04
- * Time: 18:02
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Measurement;
 
@@ -13,7 +6,6 @@ use JsonSerializable;
 
 class Amount implements JsonSerializable
 {
-
     /**
      * @var float
      */
@@ -98,5 +90,4 @@ class Amount implements JsonSerializable
     {
         return number_format($this->value, $decimals, $decimalSeparator, $thousandsSeparator);
     }
-
 }

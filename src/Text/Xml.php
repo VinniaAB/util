@@ -119,7 +119,7 @@ class Xml
     {
         if (extension_loaded('SimpleXML') && $xml instanceof SimpleXMLElement) {
             $xml = dom_import_simplexml($xml);
-        } else if (!$xml instanceof DOMNode) {
+        } elseif (!$xml instanceof DOMNode) {
             throw new \InvalidArgumentException(
                 '$xml must be an instance of either DOMNode or SimpleXMLElement'
             );

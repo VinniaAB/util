@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 15-10-15
- * Time: 11:27
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Database;
 
@@ -12,7 +6,6 @@ use wpdb;
 
 class WordpressDatabase implements DatabaseInterface
 {
-
     /**
      * @var wpdb
      */

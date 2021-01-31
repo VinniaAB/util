@@ -1,13 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2016-04-14
- * Time: 00:31
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Database;
-
 
 interface QuoterInterface
 {
@@ -22,5 +15,4 @@ interface QuoterInterface
      * @return string
      */
     public function quoteColumn(string $name): string;
-
 }

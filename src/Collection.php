@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2016-04-13
- * Time: 22:06
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util;
 
@@ -13,7 +6,6 @@ use Closure;
 
 class Collection
 {
-
     /**
      * @var array
      */
@@ -251,5 +243,4 @@ class Collection
     {
         return $this->items;
     }
-
 }

@@ -1,21 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2019-02-02
- * Time: 03:12
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use Vinnia\Util\Validation\DateRule;
 use Vinnia\Util\Validation\RuleInterface;
 
 class DateRuleTest extends AbstractRuleTest
 {
-
     /**
      * @return RuleInterface
      */
@@ -35,5 +26,4 @@ class DateRuleTest extends AbstractRuleTest
             [['yee' => '20190101'], 'yee', 'yee', 1],
         ];
     }
-
 }

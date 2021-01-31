@@ -1,14 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 17:06
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use Vinnia\Util\Tests\AbstractTest;
 use Vinnia\Util\Validation\DataSet;
@@ -16,7 +8,6 @@ use Vinnia\Util\Validation\RuleInterface;
 
 abstract class AbstractRuleTest extends AbstractTest
 {
-
     /**
      * @return RuleInterface
      */
@@ -39,5 +30,4 @@ abstract class AbstractRuleTest extends AbstractTest
         $errors = $this->getRule()->validate(new DataSet($data), $ruleKey, $expandedKey);
         $this->assertCount($errorCount, $errors);
     }
-
 }

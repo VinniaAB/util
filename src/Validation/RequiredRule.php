@@ -1,21 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2017-09-10
- * Time: 15:04
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Validation;
 
 use RuntimeException;
 use Vinnia\Util\Text\TemplateString;
 
-/**
- * Class RequiredRule
- * @package Vinnia\Util\Validation
- */
 class RequiredRule implements RuleInterface
 {
     /**

@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 15-10-20
- * Time: 13:45
- */
+<?php declare(strict_types=1);
 
 namespace Vinnia\Util\Database;
 
@@ -12,7 +6,6 @@ use PDO;
 
 class PDODatabase implements DatabaseInterface
 {
-
     /**
      * @var PDO
      */
@@ -37,7 +30,7 @@ class PDODatabase implements DatabaseInterface
         $pdo = new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false
+            PDO::ATTR_EMULATE_PREPARES => false,
         ]);
 
         return new self($pdo);
@@ -80,5 +73,4 @@ class PDODatabase implements DatabaseInterface
         $stmt->execute($params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
 }

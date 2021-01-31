@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2018-03-16
- * Time: 14:33
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Text;
 
@@ -14,7 +7,6 @@ use Vinnia\Util\Tests\AbstractTest;
 
 class TemplateStringTest extends AbstractTest
 {
-
     public function renderProvider()
     {
         return [
@@ -42,5 +34,4 @@ class TemplateStringTest extends AbstractTest
         $tpl = new TemplateString('Hello %name%', ['%', '%']);
         $this->assertEquals('Hello World', $tpl->render(['name' => 'World']));
     }
-
 }

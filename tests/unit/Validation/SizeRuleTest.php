@@ -1,14 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: johan
- * Date: 2018-08-06
- * Time: 14:52
- */
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Vinnia\Util\Tests\Validation;
-
 
 use PHPUnit\Framework\TestCase;
 use Vinnia\Util\Validation\DataSet;
@@ -103,5 +95,4 @@ class SizeRuleTest extends TestCase
         $bag = $rule->validate(new DataSet($data), $ruleKey, $expandedKey, [$comparison, $compareTo]);
         $this->assertCount($errorCount, $bag);
     }
-
 }

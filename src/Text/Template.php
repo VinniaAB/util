@@ -5,7 +5,6 @@ namespace Vinnia\Util\Text;
 
 class Template
 {
-
     /**
      * @var string
      */
@@ -42,5 +41,4 @@ class Template
     {
         return (new self($file))->render($data);
     }
-
 }
