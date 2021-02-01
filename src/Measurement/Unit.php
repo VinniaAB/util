@@ -7,9 +7,6 @@ use RuntimeException;
 
 abstract class Unit implements JsonSerializable
 {
-    const KIND_LENGTH = 'length';
-    const KIND_MASS = 'mass';
-
     const SYMBOL_MILLIMETER = 'mm';
     const SYMBOL_CENTIMETER = 'cm';
     const SYMBOL_METER = 'm';
@@ -108,6 +105,4 @@ abstract class Unit implements JsonSerializable
     {
         return $this->getSymbol();
     }
-
-    abstract public function getKind(): string;
 }

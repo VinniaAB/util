@@ -4,11 +4,6 @@ namespace Vinnia\Util\Measurement;
 
 abstract class LengthUnit extends Unit
 {
-    public function getKind(): string
-    {
-        return static::KIND_LENGTH;
-    }
-
     public static function unit(): self
     {
         return static::getCachedUnit(LengthUnit::class, static::class);
