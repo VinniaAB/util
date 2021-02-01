@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Gram extends Unit
+final class Gram extends MassUnit
 {
 }

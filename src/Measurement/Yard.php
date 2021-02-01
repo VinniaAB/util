@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Yard extends Unit
+final class Yard extends LengthUnit
 {
 }

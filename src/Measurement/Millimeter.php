@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Millimeter extends Unit
+final class Millimeter extends LengthUnit
 {
 }

@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Meter extends Unit
+final class Meter extends LengthUnit
 {
 }

@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Mile extends Unit
+final class Mile extends LengthUnit
 {
 }

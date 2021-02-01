@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Kilometer extends Unit
+final class Kilometer extends LengthUnit
 {
 }

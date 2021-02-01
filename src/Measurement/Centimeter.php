@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Centimeter extends Unit
+final class Centimeter extends LengthUnit
 {
 }

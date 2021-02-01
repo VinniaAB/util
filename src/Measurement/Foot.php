@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Foot extends Unit
+final class Foot extends LengthUnit
 {
 }

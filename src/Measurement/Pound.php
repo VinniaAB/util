@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Pound extends Unit
+final class Pound extends MassUnit
 {
 }

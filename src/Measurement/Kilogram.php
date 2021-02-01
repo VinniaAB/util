@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Kilogram extends Unit
+final class Kilogram extends MassUnit
 {
 }

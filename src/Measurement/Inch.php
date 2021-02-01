@@ -2,6 +2,6 @@
 
 namespace Vinnia\Util\Measurement;
 
-final class Inch extends Unit
+final class Inch extends LengthUnit
 {
 }

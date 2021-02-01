@@ -18,13 +18,6 @@ class UnitTest extends TestCase
         $this->assertSame($first, $second);
     }
 
-    public function testStaticCallFromBase()
-    {
-        $this->expectException(Exception::class);
-
-        Unit::unit();
-    }
-
     public function testParse()
     {
         $gram = Unit::parse('g');
