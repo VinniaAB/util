@@ -79,4 +79,11 @@ class QuantityTest extends AbstractTest
 
         $a->add($b);
     }
+
+    public function testToString()
+    {
+        $mass = new Mass(1.556, Kilogram::unit());
+
+        $this->assertSame('1.56 kg', (string) $mass);
+    }
 }

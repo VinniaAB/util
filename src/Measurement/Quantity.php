@@ -23,7 +23,7 @@ abstract class Quantity implements JsonSerializable
 
     public function __toString(): string
     {
-        return (string) $this->value;
+        return sprintf("%.2f %s", $this->value, $this->unit);
     }
 
     public function toArray(): array
